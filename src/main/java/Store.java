@@ -37,8 +37,6 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store{" +
-                "name='" + name + '\'' +
-                '}';
+        return  "Store Id:  " + this.id + " || " + "Store name: " + this.name;
     }
 }
