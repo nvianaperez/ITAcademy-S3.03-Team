@@ -8,10 +8,12 @@
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" project-jdk-name="temurin-19" project-jdk-type="JavaSDK">
+HEAD
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="19" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="ProjectType">
-    <option name="id" value="jpab" />
-  </component>
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="temurin-19" project-jdk-type="JavaSDK" />
+>>>>>>> 06cf531303a9aebba1eb7617d0c942a22340141e
+>>>>>>> f97aca3d5d15dcbaaa3a2159c85c822ff04507dd
 </project>
