@@ -1,24 +1,24 @@
 public class Tree extends Product{
 
-    private float tall;
+    private float high;
 
-    public Tree(int id, String name,int numb, float price, float tall){
+    public Tree(int id, String name,int stock, float price, float high){
 
-        super(id,name, numb, price);
-        this.tall = tall;
+        super(id,name, stock, price);
+        this.high = high;
 
     }
-    public float getTall() {
-        return this.tall;
+    public float getHigh() {
+        return this.high;
     }
 
-    public void setTall(float tall) {
-        this.tall = tall;
+    public void setHigh(float high) {
+        this.high = high;
     }
 
     @Override
     public String toString() {
         return "Id: " + super.getId() + " || " + "Name : " + super.getName() + " || " + "Colour: "
-                + this.tall + " || " + "Price: " + super.getPrice() + " || " + "Stock: " + super.getStock();
+                + this.high + " || " + "Price: " + super.getPrice() + " || " + "Stock: " + super.getStock();
     }
 }

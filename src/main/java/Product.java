@@ -1,18 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class Product {
+
+    private Scanner sc = new Scanner(System.in);
 
     private int id;
     private String name;
 
-    private int numb;
+    private int stock;
     private float price;
 
-    public Product(int id,String name,int numb,float price){
+    public Product(int id, String name, int stock, float price){
         this.id = id;
         this.name = name;
-        this.numb = numb;
+        this.stock = stock;
         this.price = price;
     }
 
@@ -32,14 +33,6 @@ public class Product {
         this.name = name;
     }
 
-    public int getNumb() {
-        return this.numb;
-    }
-
-    public void setNumb(int numb) {
-        this.numb = numb;
-    }
-
     public float getPrice() {
         return this.price;
     }
@@ -48,23 +41,30 @@ public class Product {
         this.price = price;
     }
 
-
     public int getStock(){
 
-        if(this.getNumb() > 0){
-            System.out.println("Stock available: " + this.getNumb() + " Unit/s");
+        if(this.getStock() > 0){
+            System.out.println("Stock available: " + this.getStock() + " Unit/s");
             System.out.println("");
         }else{
             System.out.println("No stock available");
             System.out.println("");
         }
-        return this.getNumb();
+        return this.stock;
     }
 
-    public void setStock(int numb){
+    public void addStock(){
 
-        // Falta por definir como modificamos el stock a partir de los pedidos del ticket
-        int stock = getStock();
+             this.getStock() = getStock() + User.readInteger("Cantidad de producto para añadir: ",sc);
 
+            System.out.println("Name : " + this.name + " || " + " Stock : " + this.getStock());
     }
+
+    public void removeStock(){
+
+            this.stock = this.getStock() - User.readInteger("Cantidad de producto a retirar: ",sc);
+
+            System.out.println("No es pot donar aquesta peça per manca de stock");
+        }
+
 }
