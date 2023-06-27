@@ -64,6 +64,7 @@ public class Main {
 
     private static int showMenu(Scanner sc) {
         System.out.println("""
+<<<<<<< HEAD
                     ***** MENU *****
                     1. Crear floristeria
                     2. Afegir un arbre
@@ -86,4 +87,26 @@ public class Main {
 
     }
 
+=======
+                ***** MENU *****
+                1. Crear floristeria
+                2. Afegir un arbre
+                3. Afegir una flor
+                4. Afegir decoració
+                5. Veure els tipus de producte de la floristeria
+                6. Retirar un arbre
+                7. Retirar una flor
+                8. Retirar decoració
+                9. Veure stock de la floristeria
+                10. Veure el valor total de la floristeria
+                11. Crear un ticket de compra
+                12. Vuere el històric de compres
+                13. Vuere el total de vendes
+                0. Sortir de l'aplicació
+                """);
+
+        return User.readIntegerMenu("Introdueix una opció [0-13]: ", sc);
+
+    }
+>>>>>>> 29a9737747c1fc4a2bc0c1f001ee3bb4d031b970
 }
