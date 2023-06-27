@@ -55,7 +55,7 @@ public class Product {
 
     public void addStock(){
 
-             this.getStock() = getStock() + User.readInteger("Cantidad de producto para añadir: ",sc);
+             this.stock = getStock() + User.readInteger("Cantidad de producto para añadir: ",sc);
 
             System.out.println("Name : " + this.name + " || " + " Stock : " + this.getStock());
     }
