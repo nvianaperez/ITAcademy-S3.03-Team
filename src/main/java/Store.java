@@ -4,7 +4,7 @@ import java.util.List;
 public class Store {
 
     private String name;
-    private int id;
+    private int idStore;
     private static int idNext = 1;
     private List<Product> productList;
 
@@ -13,7 +13,7 @@ public class Store {
     private static Store instance;
 
     public Store(String name){
-        this.id += idNext;
+        this.idStore += idNext;
         this.name = name;
         this.productList = new ArrayList<>();
         this.ticketList = new ArrayList<>();
@@ -29,7 +29,6 @@ public class Store {
         return instance;
     }
 
-
     public String getName() {
         return this.name;
     }
@@ -39,7 +38,7 @@ public class Store {
     }
 
     public int getId() {
-        return this.id;
+        return this.idStore;
     }
 
     public List<Product> getProductList() {
@@ -50,7 +49,7 @@ public class Store {
         this.productList.add(productList);
     }
 
-    public void removeProductList(Product productList) {
+    public void removeProductFromProducts(Product productList) {
         this.productList.remove(productList);
     }
 
@@ -62,9 +61,8 @@ public class Store {
         this.ticketList.add(ticket);
     }
 
-
     @Override
     public String toString() {
-        return  "Store Id:  " + this.id + " || " + "Store name: " + this.name;
+        return  "Store Id:  " + this.idStore + " || " + "Store name: " + this.name;
     }
 }

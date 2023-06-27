@@ -4,25 +4,25 @@ public class Product {
 
     private Scanner sc = new Scanner(System.in);
 
-    private int id;
+    private int idProduct;
     private String name;
 
     private int stock;
     private float price;
 
-    public Product(int id, String name, int stock, float price){
-        this.id = id;
+    public Product(int idProduct, String name, int stock, float price){
+        this.idProduct = idProduct;
         this.name = name;
         this.stock = stock;
         this.price = price;
     }
 
     public int getId() {
-        return this.id;
+        return this.idProduct;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idProduct = idProduct;
     }
 
     public String getName() {
@@ -54,17 +54,14 @@ public class Product {
     }
 
     public void addStock(){
-
              this.stock = getStock() + User.readInteger("Cantidad de producto para añadir: ",sc);
-
-            System.out.println("Name : " + this.name + " || " + " Stock : " + this.getStock());
+             System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
     }
 
     public void removeStock(){
 
             this.stock = this.getStock() - User.readInteger("Cantidad de producto a retirar: ",sc);
-
-            System.out.println("No es pot donar aquesta peça per manca de stock");
+            System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
         }
 
 }
