@@ -41,7 +41,7 @@ public class Store {
         return this.idStore;
     }
 
-    public List<Product> getProductList() {
+    public List<Product> getProducts() {
         return this.productList;
     }
 

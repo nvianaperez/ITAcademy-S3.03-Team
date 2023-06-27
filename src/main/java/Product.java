@@ -6,7 +6,6 @@ public class Product {
 
     private int idProduct;
     private String name;
-
     private int stock;
     private float price;
 
@@ -15,6 +14,11 @@ public class Product {
         this.name = name;
         this.stock = stock;
         this.price = price;
+    }
+
+    public Product(String name,int stock){
+        this.name = name;
+        this.stock = stock;
     }
 
     public int getId() {
@@ -57,7 +61,6 @@ public class Product {
              this.stock = getStock() + User.readInteger("Cantidad de producto para añadir: ",sc);
              System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
     }
-
     public void removeStock(){
 
             this.stock = this.getStock() - User.readInteger("Cantidad de producto a retirar: ",sc);
