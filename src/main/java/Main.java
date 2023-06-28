@@ -14,10 +14,10 @@ public class Main {
             int option = showMenu(sc);
             switch (option) {
                 case 1:
-//                    Menu.createStore();
+                    Menu.createStore();
                     break;
                 case 2:
-//                    Menu.addTree();
+                    Menu.addTree();
                     break;
                 case 3:
 //                    Menu.addFlower();
