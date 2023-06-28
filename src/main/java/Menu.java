@@ -45,7 +45,7 @@ public class Menu {
                         User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?", sc),
                         User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?", sc)
                         );
-                store.getProductList().add(newTree);
+                store.getProducts().add(newTree);
                 System.out.println("Nou producte afegit: "+ newTree);
                 System.out.println(store);
                 Txt.writeProductToTxt(newTree);
@@ -58,7 +58,7 @@ public class Menu {
     }
 
     private static Product searchProductInProductList(String newNameTree) {
-        for (Product product : store.getProductList()) {
+        for (Product product : store.getProducts()) {
             if (product.getName().equalsIgnoreCase(newNameTree)) {
                 return product;
             }
