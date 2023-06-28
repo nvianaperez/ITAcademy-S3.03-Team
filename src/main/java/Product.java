@@ -60,4 +60,10 @@ public class Product {
             System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
         }
 
+        public String toString(){
+
+        return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name + " || "
+                + " Precio del producto" + this.price + "€";
+        }
+
 }
