@@ -17,9 +17,9 @@ public class Product {
     }
 
     public Product(String name,int stock){
-        this.name = name;
-        this.stock = stock;
-    }
+       this.name = name;
+       this.stock = stock;
+   }
 
     public int getId() {
         return this.idProduct;
@@ -47,23 +47,16 @@ public class Product {
 
     public int getStock(){
 
-        if(this.getStock() > 0){
-            System.out.println("Stock available: " + this.getStock() + " Unit/s");
-            System.out.println("");
-        }else{
-            System.out.println("No stock available");
-            System.out.println("");
-        }
         return this.stock;
     }
 
-    public void addStock(){
-             this.stock = getStock() + User.readInteger("Cantidad de producto para añadir: ",sc);
+    public void addStock(int quantity){
+             this.stock = getStock() + quantity;
              System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
     }
-    public void removeStock(){
+    public void removeStock(int quantity){
 
-            this.stock = this.getStock() - User.readInteger("Cantidad de producto a retirar: ",sc);
+            this.stock = this.getStock() - quantity;
             System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
         }
 
