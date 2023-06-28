@@ -1,27 +1,32 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class Product {
 
-    private int id;
-    private String name;
+    private Scanner sc = new Scanner(System.in);
 
-    private int numb;
+    private int idProduct;
+    private String name;
+    private int stock;
     private float price;
 
-    public Product(int id,String name,int numb,float price){
-        this.id = id;
+    public Product(int idProduct, String name, int stock, float price){
+        this.idProduct = idProduct;
         this.name = name;
-        this.numb = numb;
+        this.stock = stock;
         this.price = price;
     }
 
+    public Product(String name,int stock){
+       this.name = name;
+       this.stock = stock;
+   }
+
     public int getId() {
-        return this.id;
+        return this.idProduct;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idProduct = idProduct;
     }
 
     public String getName() {
@@ -32,14 +37,6 @@ public class Product {
         this.name = name;
     }
 
-    public int getNumb() {
-        return this.numb;
-    }
-
-    public void setNumb(int numb) {
-        this.numb = numb;
-    }
-
     public float getPrice() {
         return this.price;
     }
@@ -48,23 +45,25 @@ public class Product {
         this.price = price;
     }
 
-
     public int getStock(){
 
-        if(this.getNumb() > 0){
-            System.out.println("Stock available: " + this.getNumb() + " Unit/s");
-            System.out.println("");
-        }else{
-            System.out.println("No stock available");
-            System.out.println("");
+        return this.stock;
+    }
+
+    public void addStock(int quantity){
+             this.stock = getStock() + quantity;
+             System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
+    }
+    public void removeStock(int quantity){
+
+            this.stock = this.getStock() - quantity;
+            System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
         }
-        return this.getNumb();
-    }
 
-    public void setStock(int numb){
+        public String toString(){
 
-        // Falta por definir como modificamos el stock a partir de los pedidos del ticket
-        int stock = getStock();
+        return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name + " || "
+                + " Precio del producto" + this.price + "€";
+        }
 
-    }
 }
