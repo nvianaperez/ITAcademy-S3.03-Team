@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Txt {
-    private static final String productPath = "/productPath";
-    private final String ticketPath = "/ticketPath";
-    private static final String storePath = "/storePath";
+    private static final String productPath = "productPath.txt";
+    private static final String ticketPath = "ticketPath.txt";
+    private static final String storePath = "storePath.txt";
 
     public static void writeStore(Store store) {
         File file = new File(storePath);
@@ -20,12 +20,13 @@ public class Txt {
         }
     }
 
-    public static Store checkStoreExist() throws IOException {
+    public static Store checkStoreExist() {
         File file = new File(storePath);
         Store store = null;
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            while (file.exists() && (store = (Store) ois.readObject()) != null) {
+            //podríamos prescindir del while puesto que solo se va a crear una tienda
+            while (ois.readObject() != null) {
                 store = (Store) ois.readObject();
             }
         } catch (EOFException ex) {

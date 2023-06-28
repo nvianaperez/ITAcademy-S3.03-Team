@@ -8,16 +8,12 @@ public class Menu {
 
     public static void createStore() {
 
-        try {
-            if(Txt.checkStoreExist() != null) {
-                store = Txt.checkStoreExist();
-                System.out.println("Ja tens una botiga creada, amb nom: "+store.getName());
-            } else {
+        if(Txt.checkStoreExist() != null) {
+            store = Txt.checkStoreExist();
+            System.out.println("Ja tens una botiga creada, amb nom: "+store.getName());
+        } else {
 //                llamar a getInstance(User.readString("")) para tener la instancia de la tienda
-                Txt.writeStore(store);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            Txt.writeStore(store);
         }
     }
 
@@ -28,39 +24,35 @@ public class Menu {
 //        4) If not exist, new Tree
 //        5) escribir txt
 
-        try {
-            if(Txt.checkStoreExist() != null) {
-                String newNameTree = User.readString("Quin tipus d'arbre vols afegir?", sc);
-                //buscarlo en la lista de productos y en el Txt de products
-                Product treeFoundInProductList = searchProductInProductList(newNameTree);
+        if(Txt.checkStoreExist() != null) {
+            String newNameTree = User.readString("Quin tipus d'arbre vols afegir?", sc);
+            //buscarlo en la lista de productos y en el Txt de products
+            Product treeFoundInProductList = searchProductInProductList(newNameTree);
 
-                if (treeFoundInProductList != null && Txt.readProductTxt(newNameTree)) {
-                    //ToDo: Falta método addStock() --> ha de sumar el número que entra el usuario al stock que ya tiene el producto.
-                    //actualizar producto en la lista de productos
+            if (treeFoundInProductList != null && Txt.readProductTxt(newNameTree)) {
+                //ToDo: falta addStock(). ha de sumar el número que entra el usuario al stock que ya tiene el producto.
+                //actualizar producto en la lista de productos
 //                    treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?", sc));
-                    System.out.println("Stock del producte "+treeFoundInProductList.getName()+" actualitzat en la llista de productes");
-                    System.out.println(treeFoundInProductList);
-                    //actualizar producto en el Txt de producto
-                    Txt.writeProductToTxt(treeFoundInProductList);
-                } else {
-                    Product newTree = new Tree(
-                            1,
-                            newNameTree,
-                            User.readInteger("Quantes unitats de "+newNameTree+" vols afegir?", sc),
-                            User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?", sc),
-                            User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?", sc)
-                            );
-                    store.getProductList().add(newTree);
-                    System.out.println("Nou producte afegit: "+ newTree);
-                    System.out.println(store);
-                    Txt.writeProductToTxt(newTree);
-                }
-
+                System.out.println("Stock del producte "+treeFoundInProductList.getName()+" actualitzat en la llista de productes");
+                System.out.println(treeFoundInProductList);
+                //actualizar producto en el Txt de producto
+                Txt.writeProductToTxt(treeFoundInProductList);
             } else {
-                System.out.println("Primer crea la botiga");
+                Product newTree = new Tree(
+                        1,
+                        newNameTree,
+                        User.readInteger("Quantes unitats de "+newNameTree+" vols afegir?", sc),
+                        User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?", sc),
+                        User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?", sc)
+                        );
+                store.getProductList().add(newTree);
+                System.out.println("Nou producte afegit: "+ newTree);
+                System.out.println(store);
+                Txt.writeProductToTxt(newTree);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        } else {
+            System.out.println("Primer crea la botiga");
         }
 
     }

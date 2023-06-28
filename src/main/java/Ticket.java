@@ -1,7 +1,10 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Ticket implements Serializable {
-
+/*
     private List<Product> productsSold;
     private static int contador = 0;
     private int id;
@@ -54,4 +57,6 @@ public class Ticket implements Serializable {
         }
         return total;
     }
+    */
+
 }
