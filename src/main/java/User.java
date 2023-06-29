@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class User {
 
-
-    public static int readIntegerMenu(String message, Scanner sc) {
+    public static int readIntegerMenu(String message) {
+        Scanner sc = new Scanner(System.in);
         boolean checked = false;
         int input = 0;
         while (!checked) {
@@ -15,16 +15,15 @@ public class User {
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
-                sc.next();
             } catch (Exception e) {
                 System.out.println("Error al introduir el número");
-                sc.next();
             }
         }
         return input;
     }
 
-    public static int readInteger(String message, Scanner sc) {
+    public static int readInteger(String message) {
+        Scanner sc = new Scanner(System.in);
         boolean checked = false;
         int input = 0;
         while (!checked) {
@@ -35,16 +34,15 @@ public class User {
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
-                sc.next();
             } catch (Exception e) {
                 System.out.println("Error: introdueix un número positiu");
-                sc.next();
             }
         }
         return input;
     }
 
-    public static String readString(String message, Scanner sc) {
+    public static String readString(String message) {
+        Scanner sc = new Scanner(System.in);
         boolean checked = false;
         String input="";
         while (!checked) {
@@ -63,7 +61,8 @@ public class User {
         return input;
     }
 
-    public static float readFloat(String message, Scanner sc) {
+    public static float readFloat(String message) {
+        Scanner sc = new Scanner(System.in);
         boolean checked = false;
         float input = 0.0f;
         while(!checked) {
@@ -73,7 +72,6 @@ public class User {
                 checked=true;
             }catch(InputMismatchException e){
                 System.out.println("Error: introdueix un número float (amb coma i decimals)");
-                sc.next();
             }
         }
         return input;

@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Txt {
     private static final String productPath = "productPath.txt";
@@ -23,16 +21,17 @@ public class Txt {
     public static Store checkStoreExist() {
         File file = new File(storePath);
         Store store = null;
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            //podríamos prescindir del while puesto que solo se va a crear una tienda
-            while (ois.readObject() != null) {
-                store = (Store) ois.readObject();
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                //podríamos prescindir del while puesto que solo se va a crear una tienda
+                while (ois.readObject() != null) {
+                    store = (Store) ois.readObject();
+                }
+            } catch (EOFException ex) {
+                System.out.println("Final del fitxer");
+            } catch (IOException | ClassNotFoundException | SecurityException ex) {
+                ex.printStackTrace();
             }
-        } catch (EOFException ex) {
-            System.out.println("Final del fitxer");
-        } catch (IOException | ClassNotFoundException | SecurityException ex) {
-            ex.printStackTrace();
         }
         return store;
     }
