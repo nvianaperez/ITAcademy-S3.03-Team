@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
@@ -12,8 +11,10 @@ public class Menu {
             store = Txt.checkStoreExist();
             System.out.println("Ja tens una botiga creada, amb nom: "+store.getName());
         } else {
-//                llamar a getInstance(User.readString("")) para tener la instancia de la tienda
-            Txt.writeStore(store);
+            Store s0 = new Store(User.readString("Entre el nom de la botiga"));
+            //llamo al constructor con el name -- reapasar singleton
+            //llamar a getInstance(User.readString("")) para tener la instancia de la tienda
+            Txt.writeStore(s0);
         }
     }
 
@@ -25,14 +26,13 @@ public class Menu {
 //        5) escribir txt
 
         if(Txt.checkStoreExist() != null) {
-            String newNameTree = User.readString("Quin tipus d'arbre vols afegir?", sc);
+            String newNameTree = User.readString("Quin tipus d'arbre vols afegir?");
             //buscarlo en la lista de productos y en el Txt de products
             Product treeFoundInProductList = searchProductInProductList(newNameTree);
 
             if (treeFoundInProductList != null && Txt.readProductTxt(newNameTree)) {
-                //ToDo: falta addStock(). ha de sumar el número que entra el usuario al stock que ya tiene el producto.
                 //actualizar producto en la lista de productos
-//                    treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?", sc));
+                    treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?"));
                 System.out.println("Stock del producte "+treeFoundInProductList.getName()+" actualitzat en la llista de productes");
                 System.out.println(treeFoundInProductList);
                 //actualizar producto en el Txt de producto
@@ -41,11 +41,11 @@ public class Menu {
                 Product newTree = new Tree(
                         1,
                         newNameTree,
-                        User.readInteger("Quantes unitats de "+newNameTree+" vols afegir?", sc),
-                        User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?", sc),
-                        User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?", sc)
+                        User.readInteger("Quantes unitats de "+newNameTree+" vols afegir?"),
+                        User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?"),
+                        User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?")
                         );
-                store.getProductList().add(newTree);
+                store.getProducts().add(newTree);
                 System.out.println("Nou producte afegit: "+ newTree);
                 System.out.println(store);
                 Txt.writeProductToTxt(newTree);
@@ -58,7 +58,8 @@ public class Menu {
     }
 
     private static Product searchProductInProductList(String newNameTree) {
-        for (Product product : store.getProductList()) {
+        //ToDo: revisar si se puede hacer con un bucle while o for con el found como tecla de escpae si ya lo encuentra
+        for (Product product : store.getProducts()) {
             if (product.getName().equalsIgnoreCase(newNameTree)) {
                 return product;
             }

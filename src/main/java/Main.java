@@ -4,8 +4,6 @@ public class Main {
     public static void main(String[] args) {
         menu();
     }
-    //ToDo: preguntar a Romina cómo recoger el atributo name de la tienda, en el constructor, en el setter o en el momento de instanciar el objeto
-    //ToDo: ¿es útil un User Singleton?
 
     private static void menu() {
         Scanner sc = new Scanner(System.in);
@@ -52,12 +50,12 @@ public class Main {
                 case 13:
 //                    Menu.printTotalTickets();
                     break;
-                default:
-                    System.out.println("Error: introdueix una opció");
                 case 0:
                     System.out.println("Gràcies per la teva visita");
                     exit = true;
-
+                    break;
+                default:
+                    System.out.println("Error: introdueix una opció");
             }
         }
     }
@@ -82,7 +80,7 @@ public class Main {
                     0. Sortir de l'aplicació
                     """);
 
-        return User.readIntegerMenu("Introdueix una opció [0-13]: ", sc);
+        return User.readIntegerMenu("Introdueix una opció [0-13]: ");
 
 
     }
