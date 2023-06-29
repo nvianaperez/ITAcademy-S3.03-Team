@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class User {
 
-
     public static int readIntegerMenu(String message) {
         Scanner sc = new Scanner(System.in);
         boolean checked = false;
@@ -16,10 +15,8 @@ public class User {
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
-                sc.next();
             } catch (Exception e) {
                 System.out.println("Error al introduir el número");
-                sc.next();
             }
         }
         return input;
@@ -37,10 +34,8 @@ public class User {
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
-                sc.next();
             } catch (Exception e) {
                 System.out.println("Error: introdueix un número positiu");
-                sc.next();
             }
         }
         return input;
@@ -77,7 +72,6 @@ public class User {
                 checked=true;
             }catch(InputMismatchException e){
                 System.out.println("Error: introdueix un número float (amb coma i decimals)");
-                sc.next();
             }
         }
         return input;

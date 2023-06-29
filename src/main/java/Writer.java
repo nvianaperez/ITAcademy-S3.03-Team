@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class Writer {
-
+/*
       //Store s0 = Store.getInstance();  Hay que crear un metodo para checkear que existe store.
     public void WriteStoreToTxt() throws IOException {
 
@@ -45,6 +45,8 @@ public class Writer {
         WriteTicketToTxt.close();
         w0.close();
     }
+
+ */
     }
 
 

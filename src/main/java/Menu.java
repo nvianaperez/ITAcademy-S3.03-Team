@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Menu {
@@ -12,8 +11,10 @@ public class Menu {
             store = Txt.checkStoreExist();
             System.out.println("Ja tens una botiga creada, amb nom: "+store.getName());
         } else {
-//                llamar a getInstance(User.readString("")) para tener la instancia de la tienda
-            Txt.writeStore(store);
+            Store s0 = new Store(User.readString("Entre el nom de la botiga"));
+            //llamo al constructor con el name -- reapasar singleton
+            //llamar a getInstance(User.readString("")) para tener la instancia de la tienda
+            Txt.writeStore(s0);
         }
     }
 
@@ -25,13 +26,13 @@ public class Menu {
 //        5) escribir txt
 
         if(Txt.checkStoreExist() != null) {
-            //ToDo: cambiar addTree() por addProduct() --> atributo en Product 'productType' --> para switch con instanceof
             String newNameTree = User.readString("Quin tipus d'arbre vols afegir?");
             //buscarlo en la lista de productos y en el Txt de products
             Product treeFoundInProductList = searchProductInProductList(newNameTree);
 
             if (treeFoundInProductList != null && Txt.readProductTxt(newNameTree)) {
                 //actualizar producto en la lista de productos
+                treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?"));
                 treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?"));
                 System.out.println("Stock del producte "+treeFoundInProductList.getName()+" actualitzat en la llista de productes");
                 System.out.println(treeFoundInProductList);

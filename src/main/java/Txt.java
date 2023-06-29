@@ -1,6 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Txt {
     private static final String productPath = "productPath.txt";
@@ -10,7 +8,7 @@ public class Txt {
     public static void writeStore(Store store) {
         File file = new File(storePath);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            if (store != null) {
+            if(store != null) {
                 oos.writeObject(store);
             }
         } catch (FileNotFoundException e) {
@@ -24,12 +22,14 @@ public class Txt {
         File file = new File(storePath);
         Store store = null;
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            store = (Store) ois.readObject();
-        } catch (EOFException ex) {
-            System.out.println("Final del fitxer");
-        } catch (IOException | ClassNotFoundException | SecurityException ex) {
-            ex.printStackTrace();
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                store = (Store) ois.readObject();
+            } catch (EOFException ex) {
+                System.out.println("Final del fitxer");
+            } catch (IOException | ClassNotFoundException | SecurityException ex) {
+                ex.printStackTrace();
+            }
         }
         return store;
     }

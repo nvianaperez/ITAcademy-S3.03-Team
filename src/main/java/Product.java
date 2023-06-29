@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Product {
+public class Product implements Serializable {
 
     private Scanner sc = new Scanner(System.in);
 
