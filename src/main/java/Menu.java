@@ -13,7 +13,7 @@ public class Menu {
         } else {
             Store s0 = new Store(User.readString("Entre el nom de la botiga"));
             //llamo al constructor con el name -- reapasar singleton
-//                llamar a getInstance(User.readString("")) para tener la instancia de la tienda
+            //llamar a getInstance(User.readString("")) para tener la instancia de la tienda
             Txt.writeStore(s0);
         }
     }
