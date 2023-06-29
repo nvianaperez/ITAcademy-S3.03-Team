@@ -82,7 +82,7 @@ public class Main {
                     0. Sortir de l'aplicació
                     """);
 
-        return User.readIntegerMenu("Introdueix una opció [0-13]: ", sc);
+        return User.readIntegerMenu("Introdueix una opció [0-13]: ");
 
 
     }

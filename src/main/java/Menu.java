@@ -25,14 +25,14 @@ public class Menu {
 //        5) escribir txt
 
         if(Txt.checkStoreExist() != null) {
-            String newNameTree = User.readString("Quin tipus d'arbre vols afegir?", sc);
+            //ToDo: cambiar addTree() por addProduct() --> atributo en Product 'productType' --> para switch con instanceof
+            String newNameTree = User.readString("Quin tipus d'arbre vols afegir?");
             //buscarlo en la lista de productos y en el Txt de products
             Product treeFoundInProductList = searchProductInProductList(newNameTree);
 
             if (treeFoundInProductList != null && Txt.readProductTxt(newNameTree)) {
-                //ToDo: falta addStock(). ha de sumar el número que entra el usuario al stock que ya tiene el producto.
                 //actualizar producto en la lista de productos
-//                    treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?", sc));
+                treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?"));
                 System.out.println("Stock del producte "+treeFoundInProductList.getName()+" actualitzat en la llista de productes");
                 System.out.println(treeFoundInProductList);
                 //actualizar producto en el Txt de producto
@@ -41,9 +41,9 @@ public class Menu {
                 Product newTree = new Tree(
                         1,
                         newNameTree,
-                        User.readInteger("Quantes unitats de "+newNameTree+" vols afegir?", sc),
-                        User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?", sc),
-                        User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?", sc)
+                        User.readInteger("Quantes unitats de "+newNameTree+" vols afegir?"),
+                        User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?"),
+                        User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?")
                         );
                 store.getProducts().add(newTree);
                 System.out.println("Nou producte afegit: "+ newTree);
