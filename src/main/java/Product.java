@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Product implements Serializable {
 
     private int idProduct;
+    private static int idNext = 1;
     private String name;
     private int stock;
     private float price;
@@ -13,8 +14,8 @@ public class Product implements Serializable {
         TREE, FLOWER, DECO
     }
 
-    public Product(int idProduct, String name, int stock, float price, Category category){
-        this.idProduct = idProduct;
+    public Product(String name, int stock, float price, Category category){
+        this.idProduct += idNext;
         this.name = name;
         this.stock = stock;
         this.price = price;
@@ -81,5 +82,6 @@ public class Product implements Serializable {
         return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name + " || "
                 + " Precio del producto" + this.price + "€";
         }
+
 
 }

@@ -5,8 +5,7 @@ import java.util.List;
 public class Store implements Serializable {
 
     private String name;
-    private int idStore;
-    private static int idNext = 1;
+
     private List<Product> productList;
 
     private List<Ticket> ticketList;
@@ -14,13 +13,14 @@ public class Store implements Serializable {
     private static Store instance;
 
     private Store(String name){
-        this.idStore += idNext;
         this.name = name;
         this.productList = new ArrayList<>();
         this.ticketList = new ArrayList<>();
     }
 
     private Store() {
+        this.productList = new ArrayList<>();
+        this.ticketList = new ArrayList<>();
     }
 
     public static Store getInstance(){
@@ -36,10 +36,6 @@ public class Store implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getId() {
-        return this.idStore;
     }
 
     public List<Product> getProducts() {
@@ -64,6 +60,6 @@ public class Store implements Serializable {
 
     @Override
     public String toString() {
-        return  "Store Id:  " + this.idStore + " || " + "Store name: " + this.name;
+        return  "Store name: " + this.name;
     }
 }

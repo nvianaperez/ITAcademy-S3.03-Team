@@ -40,20 +40,28 @@ public class Txt {
         File file = new File(productPath);
         String s = newProductName.trim();
         boolean found = false;
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            //ToDo: NullPointerException br.readLine() is null
-            while(file.exists() && (br.readLine() != null) && !found) {
-                if(br.readLine().contains(s)) {
-                    found = true;
+        if(file.exists()) {
+            String line;
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                line = br.readLine();
+                //ToDo: NullPointerException br.readLine() is null
+                while ((line != null) && !found) {
+                    if (line.contains(s)) {
+                        found = true;
+                    }
+                    line = br.readLine();
                 }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } else {
+                System.out.println("No existeix cap producte registrat");
         }
         return found;
     }
+
 
     public static List<Product> readProductTxt() {
         List<Product> productList = new ArrayList<>();
@@ -78,9 +86,9 @@ public class Txt {
     //ToDo: único método writeTxt(Object object) y que dentro pregunte si quiere escribir en el File de store o en el de product o en el de ticket
     public static void writeProductToTxt(Product newProduct) {
         File file = new File(productPath);
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, true))) {
             if(newProduct != null) {
-                oos.writeObject(newProduct);
+                oos.writeObject(newProduct+"\n");
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
