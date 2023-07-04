@@ -1,9 +1,8 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
 
-    private static Store store;
+    private static Store s0;
 
 
     public static void createStore() {
@@ -11,8 +10,8 @@ public class Menu {
         Store s0 = Store.getInstance();
 
         if(Txt.checkStoreExist() != null) {
-            store = Txt.checkStoreExist();
-            System.out.println("Ja tens una botiga creada, amb nom: " + store.getName());
+            Menu.s0 = Txt.checkStoreExist();
+            System.out.println("Ja tens una botiga creada, amb nom: " + Menu.s0.getName());
         } else {
             s0.setName(User.readString("Entre el nom de la botiga"));
             Txt.writeStore(s0);
@@ -21,7 +20,7 @@ public class Menu {
 
     public static void addProduct() {
         if (Txt.checkStoreExist() != null) {
-            store = Txt.checkStoreExist();
+            s0 = Txt.checkStoreExist();
             String askForCategory = User.readString("Quin tipus de producte vols afegir?\n\t1. Tree\n\t2. Flower\n\t3. Decoration");
 
             if (askForCategory.equals("1")) {
@@ -39,23 +38,18 @@ public class Menu {
                         Txt.writeProductToTxt(updatedTree);
                     } else {
                         Product newTree = new Tree(
-                                1,
                                 newNameTree,
                                 User.readInteger("Quantes unitats de " + newNameTree + " vols afegir?"),
                                 User.readFloat("Quin preu tindrà el producte " + newNameTree + " ?"),
                                 Product.Category.TREE,
                                 User.readFloat("Quina alçada tindrà el producte: " + newNameTree + " ?")
                         );
-//                    ToDo: ERROR --> no guarda el nuevo producto en la lista de productos
+//                    ToDo: ERROR --> no guarda el nuevo producto en la lista de productos y no escribe el nuevo producto en el txt
                         Txt.writeProductToTxt(newTree);
-//                    1. productList = readProductsFromProductTxt
-//                    2. después añadir el nuevo producto a productList
-                        List<Product> productList = Txt.readProductTxt();
-                        productList.add(newTree);
                         System.out.println("Nou producte afegit: " + newTree);
-                        productList.stream()
-                                .forEach(System.out::println);
-                        System.out.println(store.getProducts());
+
+//                        s0.addProductToProducts(newTree);
+                        System.out.println(s0.getProducts().toString());
                     }
 
             } else if (askForCategory.equals("2")) {
@@ -70,16 +64,15 @@ public class Menu {
                     Txt.writeProductToTxt(updatedFlower);
                 } else {
                     Product newFlower = new Flower(
-                            1,
                             newNameFlower,
                             User.readInteger("Quantes unitats de " + newNameFlower + " vols afegir?"),
                             User.readFloat("Quin preu tindrà el producte " + newNameFlower + " ?"),
                             Product.Category.FLOWER,
                             User.readString("De quin color serà el producte " + newNameFlower)
                     );
-                    store.getProducts().add(newFlower);
+                    s0.getProducts().add(newFlower);
                     System.out.println("Nou producte afegit: " + newFlower);
-                    System.out.println(store.getProducts());
+                    System.out.println(s0.getProducts());
                     Txt.writeProductToTxt(newFlower);
                 }
             } else {
@@ -94,16 +87,15 @@ public class Menu {
                     Txt.writeProductToTxt(updatedDeco);
                 } else {
                     Product newDeco = new Deco(
-                            1,
                             newNameDeco,
                             User.readInteger("Quantes unitats de " + newNameDeco + " vols afegir?"),
                             User.readFloat("Quin preu tindrà el producte " + newNameDeco + " ?"),
                             Product.Category.DECO,
                             User.readString("De quin material serà la decoració de "+newNameDeco+" ?\n\t1. Fusta\n\t2.Plàstic")
                     );
-                    store.getProducts().add(newDeco);
+                    s0.getProducts().add(newDeco);
                     System.out.println("Nou producte afegit: " + newDeco);
-                    System.out.println(store.getProducts());
+                    System.out.println(s0.getProducts());
                     Txt.writeProductToTxt(newDeco);
                 }
             }
@@ -119,8 +111,8 @@ public class Menu {
 
     private static boolean searchProductInProductList(String newProductName) {
         if (Txt.checkStoreExist() != null) {
-            store = Txt.checkStoreExist();
-            for (Product product : store.getProducts()) {
+            s0 = Txt.checkStoreExist();
+            for (Product product : s0.getProducts()) {
                 if (product.getName().equalsIgnoreCase(newProductName)) {
                     return true;
                 }
