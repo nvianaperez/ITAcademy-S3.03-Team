@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -49,11 +50,11 @@ public class User {
             try{
                 System.out.println(message);
                 input = sc.nextLine();
-                if(input.length()==4) throw new InputMismatchException();
+//                if(input.length()<4) throw new InputMismatchException();
                 if(input.isEmpty()) throw new Exception();
                 checked = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Error: el nom almenys ha de tenir 4 lletres");
+//            } catch (InputMismatchException e) {
+//                System.out.println("Error: el nom almenys ha de tenir 4 lletres");
             } catch (Exception e) {
                 System.out.println("Error: el nom no pot estar buit");
             }
@@ -65,13 +66,14 @@ public class User {
         Scanner sc = new Scanner(System.in);
         boolean checked = false;
         float input = 0.0f;
-        while(!checked) {
+        while (!checked) {
             try{
                 System.out.println(message);
                 input = sc.nextFloat();
                 checked=true;
             }catch(InputMismatchException e){
                 System.out.println("Error: introdueix un número float (amb coma i decimals)");
+                sc.next();
             }
         }
         return input;
