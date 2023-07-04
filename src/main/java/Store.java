@@ -13,16 +13,16 @@ public class Store implements Serializable {
 
     private static Store instance;
 
-    public Store(String name){
+    private Store(String name){
         this.idStore += idNext;
         this.name = name;
         this.productList = new ArrayList<>();
         this.ticketList = new ArrayList<>();
     }
 
-    private Store(){
-
+    private Store() {
     }
+
     public static Store getInstance(){
         if(instance == null){
             instance = new Store();
@@ -46,8 +46,8 @@ public class Store implements Serializable {
         return this.productList;
     }
 
-    public void addProductToProducts(Product productList) {
-        this.productList.add(productList);
+    public void addProductToProducts(Product product) {
+        this.productList.add(product);
     }
 
     public void removeProductFromProducts(Product productList) {

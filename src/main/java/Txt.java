@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Txt {
     private static final String productPath = "productPath.txt";
@@ -21,6 +23,7 @@ public class Txt {
     public static Store checkStoreExist() {
         File file = new File(storePath);
         Store store = null;
+
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
                 store = (Store) ois.readObject();
@@ -33,11 +36,12 @@ public class Txt {
         return store;
     }
 
-    public static boolean readProductTxt(String newNameTree) {
+    public static boolean productFoundInProductTxt(String newProductName) {
         File file = new File(productPath);
-        String s = newNameTree.trim();
+        String s = newProductName.trim();
         boolean found = false;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            //ToDo: NullPointerException br.readLine() is null
             while(file.exists() && (br.readLine() != null) && !found) {
                 if(br.readLine().contains(s)) {
                     found = true;
@@ -51,13 +55,32 @@ public class Txt {
         return found;
     }
 
-    //ToDo: cambiar este método para que reciba por parámetro un Product product y dentro pregunte qué es: tree, flower o deco y escriba el objeto
-    //ToDo: quizá podamos hacer un único método writeTxt(Object object) y que dentro pregunte si quiere escribir en el File de store o en el de product o en el de ticket
-    public static void writeProductToTxt(Product newTree) {
+    public static List<Product> readProductTxt() {
+        List<Product> productList = new ArrayList<>();
+        File file = new File(productPath);
+        Product product;
+
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                while((product = (Product)ois.readObject()) != null) {
+                    productList.add(product);
+                }
+            } catch (EOFException ex) {
+                System.out.println("Final del fitxer");
+            } catch (IOException | ClassNotFoundException | SecurityException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return productList;
+
+    }
+
+    //ToDo: único método writeTxt(Object object) y que dentro pregunte si quiere escribir en el File de store o en el de product o en el de ticket
+    public static void writeProductToTxt(Product newProduct) {
         File file = new File(productPath);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            while(newTree != null) {
-                oos.writeObject(newTree);
+            if(newProduct != null) {
+                oos.writeObject(newProduct);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
