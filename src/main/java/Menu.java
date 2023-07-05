@@ -3,13 +3,14 @@ import java.util.Scanner;
 public class Menu {
 
     private static Store store;
+    private static Ticket ticket;
     private static Scanner sc;
 
     public static void createStore() {
 
-        if(Txt.checkStoreExist() != null) {
+        if (Txt.checkStoreExist() != null) {
             store = Txt.checkStoreExist();
-            System.out.println("Ja tens una botiga creada, amb nom: "+store.getName());
+            System.out.println("Ja tens una botiga creada, amb nom: " + store.getName());
         } else {
             Store s0 = new Store(User.readString("Entre el nom de la botiga"));
             //llamo al constructor con el name -- reapasar singleton
@@ -25,15 +26,15 @@ public class Menu {
 //        4) If not exist, new Tree
 //        5) escribir txt
 
-        if(Txt.checkStoreExist() != null) {
+        if (Txt.checkStoreExist() != null) {
             String newNameTree = User.readString("Quin tipus d'arbre vols afegir?");
             //buscarlo en la lista de productos y en el Txt de products
             Product treeFoundInProductList = searchProductInProductList(newNameTree);
 
             if (treeFoundInProductList != null && Txt.readProductTxt(newNameTree)) {
                 //actualizar producto en la lista de productos
-                    treeFoundInProductList.addStock(User.readInteger("Quantes unitats de "+treeFoundInProductList.getName()+" vols afegir?"));
-                System.out.println("Stock del producte "+treeFoundInProductList.getName()+" actualitzat en la llista de productes");
+                treeFoundInProductList.addStock(User.readInteger("Quantes unitats de " + treeFoundInProductList.getName() + " vols afegir?"));
+                System.out.println("Stock del producte " + treeFoundInProductList.getName() + " actualitzat en la llista de productes");
                 System.out.println(treeFoundInProductList);
                 //actualizar producto en el Txt de producto
                 Txt.writeProductToTxt(treeFoundInProductList);
@@ -41,12 +42,12 @@ public class Menu {
                 Product newTree = new Tree(
                         1,
                         newNameTree,
-                        User.readInteger("Quantes unitats de "+newNameTree+" vols afegir?"),
-                        User.readFloat("Quin preu tindrà el producte "+newNameTree+" ?"),
-                        User.readFloat("Quina alçada tindrà el producte: "+newNameTree+" ?")
-                        );
+                        User.readInteger("Quantes unitats de " + newNameTree + " vols afegir?"),
+                        User.readFloat("Quin preu tindrà el producte " + newNameTree + " ?"),
+                        User.readFloat("Quina alçada tindrà el producte: " + newNameTree + " ?")
+                );
                 store.getProducts().add(newTree);
-                System.out.println("Nou producte afegit: "+ newTree);
+                System.out.println("Nou producte afegit: " + newTree);
                 System.out.println(store);
                 Txt.writeProductToTxt(newTree);
             }
@@ -65,5 +66,26 @@ public class Menu {
             }
         }
         return null;
+    }
+
+    public static void addTicket() {
+//        1) look for store
+//        2) if exist, add stock.
+//        3) escribir txt
+
+        if (Txt.checkStoreExist() != null) {
+            store = Txt.checkStoreExist();
+            Ticket ticket = new Ticket();
+            store.getTickets().add(ticket);
+            if (store.getProducts() != null) {
+                ticket.addProductsToTicket(User.readString("What product do you want to add to the ticket?"), User.readInteger("How many products of this type do you want to add?"), store);
+                Txt.writeTicket(ticket);
+            } else {
+                System.out.println("There are no products in the store");
+            }
+        } else {
+            System.out.println("Primer crea la botiga");
+        }
+
     }
 }

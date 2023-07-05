@@ -42,7 +42,7 @@ public class Main {
 //                    Menu.printTotalValue();
                     break;
                 case 11:
-//                    Menu.createTicket();
+                     Menu.addTicket();
                     break;
                 case 12:
 //                    Menu.printAllTickets();
