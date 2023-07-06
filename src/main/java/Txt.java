@@ -26,6 +26,7 @@ public class Txt {
 
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+
                 store = (Store) ois.readObject();
             } catch (EOFException ex) {
                 System.out.println("Final del fitxer");
@@ -95,6 +96,48 @@ public class Txt {
             throw new RuntimeException(e);
         }
     }
+<<<<<<< HEAD
+=======
+
+    public static void writeTicket(Ticket ticket) {
+        File file = new File(ticketPath);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+            if(ticket != null) {
+                oos.writeObject(ticket);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+//    public static Store checkStoreExist() {
+//        try (BufferedReader br = new BufferedReader(new FileReader("store.txt"))) {
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                Store store = parseStore(line);
+//                if (store != null) {
+//                    return store;
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+//
+//    private static Store parseStore(String line) {
+//        // Lógica para analizar la línea y crear un objeto Store
+//        String[] parts = line.split(",");
+//        if (parts.length >= 4) {
+//            String name = parts[0];
+//            return new Store(name);
+//        }
+//        return null;
+//    }
+>>>>>>> 3a40edf6f44b0c9b6365a3e797728b4917e5ea77
 }
 
 

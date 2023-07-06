@@ -36,7 +36,7 @@ public class Main {
 //                    Menu.printTotalValue();
                     break;
                 case 9:
-//                    Menu.createTicket();
+                     Menu.addTicket();
                     break;
                 case 10:
 //                    Menu.printAllTickets();
@@ -56,6 +56,10 @@ public class Main {
 
     private static int showMenu(Scanner sc) {
         System.out.println("""
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3a40edf6f44b0c9b6365a3e797728b4917e5ea77
                     ***** MENU *****
                     1. Crear floristeria
                     2. Afegir un producte
