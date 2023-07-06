@@ -15,7 +15,7 @@ public class Product implements Serializable {
     }
 
     public Product(String name, int stock, float price, Category category){
-        this.idProduct += idNext;
+        this.idProduct = idNext++;
         this.name = name;
         this.stock = stock;
         this.price = price;
@@ -77,11 +77,13 @@ public class Product implements Serializable {
             System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
         }
 
+        @Override
         public String toString(){
 
         return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name + " || "
                 + " Precio del producto" + this.price + "€";
         }
+
 
 
 }

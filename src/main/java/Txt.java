@@ -83,7 +83,6 @@ public class Txt {
 
     }
 
-    //ToDo: único método writeTxt(Object object) y que dentro pregunte si quiere escribir en el File de store o en el de product o en el de ticket
     public static void writeProductToTxt(Product newProduct) {
         File file = new File(productPath);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, true))) {
@@ -96,32 +95,6 @@ public class Txt {
             throw new RuntimeException(e);
         }
     }
-
-
-//    public static Store checkStoreExist() {
-//        try (BufferedReader br = new BufferedReader(new FileReader("store.txt"))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                Store store = parseStore(line);
-//                if (store != null) {
-//                    return store;
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-//
-//    private static Store parseStore(String line) {
-//        // Lógica para analizar la línea y crear un objeto Store
-//        String[] parts = line.split(",");
-//        if (parts.length >= 4) {
-//            String name = parts[0];
-//            return new Store(name);
-//        }
-//        return null;
-//    }
 }
 
 

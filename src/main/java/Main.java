@@ -56,7 +56,6 @@ public class Main {
 
     private static int showMenu(Scanner sc) {
         System.out.println("""
-<<<<<<< HEAD
                     ***** MENU *****
                     1. Crear floristeria
                     2. Afegir un producte
