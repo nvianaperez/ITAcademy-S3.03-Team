@@ -2,8 +2,8 @@ public class Deco extends Product{
 
     private String decoType;
 
-    public Deco(int id,String name,int stock, float price, String decoType){
-        super(id,name, stock, price);
+    public Deco(String name,int stock, float price, Category category, String decoType){
+        super(name, stock, price, category);
         this.decoType = decoType;
     }
 

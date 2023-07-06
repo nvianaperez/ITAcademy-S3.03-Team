@@ -5,24 +5,24 @@ import java.util.List;
 public class Store implements Serializable {
 
     private String name;
-    private int idStore;
-    private static int idNext = 1;
+
     private List<Product> productList;
 
     private List<Ticket> ticketList;
 
     private static Store instance;
 
-    public Store(String name){
-        this.idStore += idNext;
+    private Store(String name){
         this.name = name;
         this.productList = new ArrayList<>();
         this.ticketList = new ArrayList<>();
     }
 
-    private Store(){
-
+    private Store() {
+        this.productList = new ArrayList<>();
+        this.ticketList = new ArrayList<>();
     }
+
     public static Store getInstance(){
         if(instance == null){
             instance = new Store();
@@ -38,16 +38,12 @@ public class Store implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
-        return this.idStore;
-    }
-
     public List<Product> getProducts() {
         return this.productList;
     }
 
-    public void addProductToProducts(Product productList) {
-        this.productList.add(productList);
+    public void addProductToProducts(Product product) {
+        this.productList.add(product);
     }
 
     public void removeProductFromProducts(Product productList) {
@@ -64,6 +60,6 @@ public class Store implements Serializable {
 
     @Override
     public String toString() {
-        return  "Store Id:  " + this.idStore + " || " + "Store name: " + this.name;
+        return  "Store name: " + this.name;
     }
 }

@@ -3,24 +3,33 @@ import java.util.Scanner;
 
 public class Product implements Serializable {
 
-    private Scanner sc = new Scanner(System.in);
-
     private int idProduct;
+    private static int idNext = 1;
     private String name;
     private int stock;
     private float price;
+    private Category category;
 
-    public Product(int idProduct, String name, int stock, float price){
-        this.idProduct = idProduct;
+    public enum Category {
+        TREE, FLOWER, DECO
+    }
+
+    public Product(String name, int stock, float price, Category category){
+        this.idProduct += idNext;
         this.name = name;
         this.stock = stock;
         this.price = price;
+        this.category = category;
     }
 
     public Product(String name,int stock){
        this.name = name;
        this.stock = stock;
    }
+
+    public Product(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return this.idProduct;
@@ -47,8 +56,15 @@ public class Product implements Serializable {
     }
 
     public int getStock(){
-
         return this.stock;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void addStock(int quantity){
@@ -66,5 +82,6 @@ public class Product implements Serializable {
         return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name + " || "
                 + " Precio del producto" + this.price + "€";
         }
+
 
 }

@@ -2,9 +2,9 @@ public class Tree extends Product{
 
     private float heigh;
 
-    public Tree(int id, String name,int stock, float price, float heigh){
+    public Tree(String name,int stock, float price, Category category, float heigh){
 
-        super(id,name, stock, price);
+        super(name, stock, price, category);
         this.heigh = heigh;
 
     }
