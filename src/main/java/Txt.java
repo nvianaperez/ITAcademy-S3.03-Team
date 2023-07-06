@@ -84,7 +84,6 @@ public class Txt {
 
     }
 
-    //ToDo: único método writeTxt(Object object) y que dentro pregunte si quiere escribir en el File de store o en el de product o en el de ticket
     public static void writeProductToTxt(Product newProduct) {
         File file = new File(productPath);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, true))) {
@@ -97,6 +96,8 @@ public class Txt {
             throw new RuntimeException(e);
         }
     }
+<<<<<<< HEAD
+=======
 
     public static void writeTicket(Ticket ticket) {
         File file = new File(ticketPath);
@@ -136,6 +137,7 @@ public class Txt {
 //        }
 //        return null;
 //    }
+>>>>>>> 3a40edf6f44b0c9b6365a3e797728b4917e5ea77
 }
 
 

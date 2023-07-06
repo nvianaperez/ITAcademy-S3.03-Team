@@ -1,4 +1,4 @@
-import java.util.List;
+import org.json.JSONObject;
 
 public class Menu {
 
@@ -8,50 +8,107 @@ public class Menu {
   
     public static void createStore() {
 
+<<<<<<< HEAD
+        Store s0 = Store.getInstance();
+
+        if(Reader.checkStoreExist()) {
+            System.out.println("Ja tens una botiga creada amb nom: "+s0.getName());
+=======
         if (Txt.checkStoreExist() != null) {
             s0 = Txt.checkStoreExist();
             System.out.println("Ja tens una botiga creada, amb nom: " + store.getName());
    
+>>>>>>> 3a40edf6f44b0c9b6365a3e797728b4917e5ea77
         } else {
             s0.setName(User.readString("Entre el nom de la botiga"));
-            Txt.writeStore(s0);
+            Reader.writeStoreObjectToJson(s0);
         }
     }
 
     public static void addProduct() {
-        if (Txt.checkStoreExist() != null) {
-            s0 = Txt.checkStoreExist();
-            String askForCategory = User.readString("Quin tipus de producte vols afegir?\n\t1. Tree\n\t2. Flower\n\t3. Decoration");
+//        check if store exist
+//        check if product exist
+//        crear el producto
+//        crear el JsonProduct
+//        write el JsonProduct
 
-            if (askForCategory.equals("1")) {
-                String newNameTree = User.readString("Quin tipus d'arbre vols afegir?");
+         if (Reader.checkStoreExist()) {
+             String name = User.readString("Nom del producte: ");
+             if (Reader.checkProductExist(name)) {
+                 Product product = Reader.readProductObjectFromJson(name);
+                 int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
+                 product.addStock(quantity);
+                 System.out.println(product);
+             } else {
+                 System.out.println("El producte no es troba al catàleg. Afegeix-lo");
+                 Product newProduct = Menu.createProduct();
+                 JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
+                 //ToDo: imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
+                 Reader.writeJsonProduct(newJsonProduct);
 
-//                if (searchProductInProductList(newNameTree) && Txt.productFoundInProductTxt(newNameTree)) {
-                if (Txt.productFoundInProductTxt(newNameTree)) {
+             }
+         } else {
+         System.out.println("Primer crea la botiga");
+         }
+    }
 
-                        Product updatedTree = updateProduct();
-                        //actualizar producto en la lista de productos
-                        updatedTree.addStock(User.readInteger("Quantes unitats de " + updatedTree.getName() + " vols afegir?"));
-                        System.out.println("Stock del producte " + updatedTree.getName() + " actualitzat en la llista de productes");
-                        System.out.println(updatedTree);
-                        //actualizar producto en el Txt de producto
-                        Txt.writeProductToTxt(updatedTree);
-                    } else {
-                        Product newTree = new Tree(
-                                newNameTree,
-                                User.readInteger("Quantes unitats de " + newNameTree + " vols afegir?"),
-                                User.readFloat("Quin preu tindrà el producte " + newNameTree + " ?"),
-                                Product.Category.TREE,
-                                User.readFloat("Quina alçada tindrà el producte: " + newNameTree + " ?")
-                        );
-//                    ToDo: ERROR --> no guarda el nuevo producto en la lista de productos y no escribe el nuevo producto en el txt
-                        Txt.writeProductToTxt(newTree);
-                        System.out.println("Nou producte afegit: " + newTree);
+    private static JSONObject createJsonProduct(Product newProduct) {
+        JSONObject jsonProduct = new JSONObject();
+//        jsonProduct.putOnce("product", newProduct);
+        jsonProduct.put("name", newProduct.getName());
+        jsonProduct.put("stock", newProduct.getStock());
+        jsonProduct.put("price", newProduct.getPrice());
+        jsonProduct.put("category", newProduct.getCategory());
+        if (newProduct.getCategory() == Product.Category.TREE) {
+            jsonProduct.put("height", ((Tree) newProduct).getHeigh() );
+        }
+        if (newProduct.getCategory() == Product.Category.FLOWER ) {
+            jsonProduct.put("colour", ((Flower) newProduct).getColour() );
+        }
+        if (newProduct.getCategory() == Product.Category.DECO) {
+            jsonProduct.put("decoType", ((Deco) newProduct).getDecoType());
+        }
+        return jsonProduct;
+    }
 
-//                        s0.addProductToProducts(newTree);
-                        System.out.println(s0.getProducts().toString());
-                    }
+    private static Product createProduct() {
+        Product product = null;
+        Product.Category category = Menu.askForCategory();
+        String name = User.readString("Nom del producte: ");
+        int stock = User.readInteger("Quantitat d'estoc: ");
+        float price = User.readFloat("Preu del producte: ");
 
+<<<<<<< HEAD
+        if(category == Product.Category.TREE) {
+            float height = User.readFloat("Alçada de l'arbre: ");
+            product = new Tree(name, stock, price, category, height);
+        }
+        if(category == Product.Category.FLOWER) {
+            String colour = User.readString("Color de la flor: ");
+            product = new Flower(name, stock, price, category, colour);
+        }
+        if(category == Product.Category.DECO){
+            String decoType = User.readString("Material del producte de decoració: ");
+            product = new Deco(name, stock, price, category, decoType);
+        }
+        return product;
+    }
+
+    private static Product.Category askForCategory() {
+        Product.Category category = null;
+        int option = User.readInteger("Quin tipus de producte vols afegir?\n\t1. Tree\n\t2. Flower\n\t3. Decoration");
+        if (option == 1) {
+            category = Product.Category.TREE;
+        } else if (option == 2) {
+            category = Product.Category.FLOWER;
+        } else if (option == 3) {
+            category = Product.Category.DECO;
+        } else {
+            System.out.println("Error al introduir la categoria de producte");
+        }
+        return category;
+    }
+=======
             } else if (askForCategory.equals("2")) {
                 String newNameFlower = User.readString("Quin tipus de flor vols afegir?");
 
@@ -306,6 +363,7 @@ public class Menu {
         }
     }
 
+>>>>>>> 3a40edf6f44b0c9b6365a3e797728b4917e5ea77
 }
 
 
