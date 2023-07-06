@@ -61,4 +61,8 @@ public class Ticket implements Serializable {
         }
         return total;
     }
+
+    public String ticketToString() {
+        return "Ticket ID" + id + " " + productsSold + " " + calculateTotalTicket();
+    }
 }
