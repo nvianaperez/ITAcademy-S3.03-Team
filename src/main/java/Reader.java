@@ -2,6 +2,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.json.*;
 
 import java.io.*;
+import java.util.List;
 
 public class Reader {
     private static final String productPath = "productPath.txt";
@@ -94,10 +95,23 @@ public class Reader {
                 String line = br.readLine();
                 while(line != null) {
                     if(line.contains(name)) {
-
-
-
-
+                        JSONObject json = new JSONObject(line);
+                        float price = json.getFloat("price");
+                        name = json.getString("name");
+                        int stock = json.getInt("stock");
+                        String category = json.getString("category");
+                        if(category.equals("TREE")) {
+                            float height = json.getFloat("height");
+                            product = new Tree(name,stock, price, Product.Category.TREE, height);
+                        }
+                        if(category.equals("FLOWER")) {
+                            String colour = json.getString("colour");
+                            product = new Flower(name,stock,price, Product.Category.FLOWER, colour);
+                        }
+                        if(category.equals("DECO")) {
+                            String decoType = json.getString("decoType");
+                            product = new Deco(name, stock, price, Product.Category.DECO, decoType);
+                        }
                         break;
                     }
                     line = br.readLine();
@@ -109,5 +123,9 @@ public class Reader {
             }
         }
         return product;
+    }
+
+    public static List<Product> readAllProductsFromTxt() {
+        return null;
     }
 }

@@ -2,15 +2,16 @@ import org.json.JSONObject;
 
 public class Menu {
 
-    private static Store s0;
 
+    private static Store s0;
+    private static Ticket ticket;
 
     public static void createStore() {
 
         Store s0 = Store.getInstance();
 
-        if(Reader.checkStoreExist()) {
-            System.out.println("Ja tens una botiga creada amb nom: "+s0.getName());
+        if (Reader.checkStoreExist()) {
+            System.out.println("Ja tens una botiga creada amb nom: " + s0.getName());
         } else {
             s0.setName(User.readString("Entre el nom de la botiga"));
             Reader.writeStoreObjectToJson(s0);
@@ -24,24 +25,24 @@ public class Menu {
 //        crear el JsonProduct
 //        write el JsonProduct
 
-         if (Reader.checkStoreExist()) {
-             String name = User.readString("Nom del producte: ");
-             if (Reader.checkProductExist(name)) {
-                 Product product = Reader.readProductObjectFromJson(name);
-                 int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
-                 product.addStock(quantity);
-                 System.out.println(product);
-             } else {
-                 System.out.println("El producte no es troba al catàleg. Afegeix-lo");
-                 Product newProduct = Menu.createProduct();
-                 JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
-                 //ToDo: imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
-                 Reader.writeJsonProduct(newJsonProduct);
+        if (Reader.checkStoreExist()) {
+            String name = User.readString("Nom del producte: ");
+            if (Reader.checkProductExist(name)) {
+                Product product = Reader.readProductObjectFromJson(name);
+                int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
+                product.addStock(quantity);
+                System.out.println(product);
+            } else {
+                System.out.println("El producte no es troba al catàleg. Afegeix-lo");
+                Product newProduct = Menu.createProduct();
+                JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
+                //ToDo: imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
+                Reader.writeJsonProduct(newJsonProduct);
 
-             }
-         } else {
-         System.out.println("Primer crea la botiga");
-         }
+            }
+        } else {
+            System.out.println("Primer crea la botiga");
+        }
     }
 
     private static JSONObject createJsonProduct(Product newProduct) {
@@ -52,10 +53,10 @@ public class Menu {
         jsonProduct.put("price", newProduct.getPrice());
         jsonProduct.put("category", newProduct.getCategory());
         if (newProduct.getCategory() == Product.Category.TREE) {
-            jsonProduct.put("height", ((Tree) newProduct).getHeigh() );
+            jsonProduct.put("height", ((Tree) newProduct).getHeigh());
         }
-        if (newProduct.getCategory() == Product.Category.FLOWER ) {
-            jsonProduct.put("colour", ((Flower) newProduct).getColour() );
+        if (newProduct.getCategory() == Product.Category.FLOWER) {
+            jsonProduct.put("colour", ((Flower) newProduct).getColour());
         }
         if (newProduct.getCategory() == Product.Category.DECO) {
             jsonProduct.put("decoType", ((Deco) newProduct).getDecoType());
@@ -70,15 +71,16 @@ public class Menu {
         int stock = User.readInteger("Quantitat d'estoc: ");
         float price = User.readFloat("Preu del producte: ");
 
-        if(category == Product.Category.TREE) {
+
+        if (category == Product.Category.TREE) {
             float height = User.readFloat("Alçada de l'arbre: ");
             product = new Tree(name, stock, price, category, height);
         }
-        if(category == Product.Category.FLOWER) {
+        if (category == Product.Category.FLOWER) {
             String colour = User.readString("Color de la flor: ");
             product = new Flower(name, stock, price, category, colour);
         }
-        if(category == Product.Category.DECO){
+        if (category == Product.Category.DECO) {
             String decoType = User.readString("Material del producte de decoració: ");
             product = new Deco(name, stock, price, category, decoType);
         }

@@ -1,10 +1,10 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 public class Ticket implements Serializable {
-/*
+
     private List<Product> productsSold;
     private static int contador = 0;
     private int id;
@@ -22,27 +22,31 @@ public class Ticket implements Serializable {
         return productsSold;
     }
 
-    public int getId() {
+    public  int getId() {
         return id;
     }
 
-    public void addProductsToTicket(String name, int quantity) {
-        Optional<Product> productOptional = s0.getProducts().stream()
-                .filter(p -> name.equalsIgnoreCase(p.getName()))
-                .findFirst();
+    public void addProductsToTicket(String name, int quantity, Store store) {
+   //       if(s0.getProducts() != null) {
+   //         System.out.println("There are no products in the store");
+   //     }else {
+            Optional<Product> productOptional = store.getProducts().stream()
+                    .filter(p -> name.equalsIgnoreCase(p.getName()))
+                    .findFirst();
 
-        productOptional.ifPresent(product -> {
-            if (quantity <= product.getStock()) {
-                productsSold.add(new Product(name, quantity));
-                product.removeStock(quantity);
-            } else {
-                System.out.println("There's not enough stock for this product.");
+            productOptional.ifPresent(product -> {
+                if (quantity <= product.getStock()) {
+                    productsSold.add(new Product(name, quantity));
+                    product.removeStock(quantity);
+                } else {
+                    System.out.println("There's not enough stock for this product.");
+                }
+            });
+
+            if (!productOptional.isPresent()) {
+                System.out.println("Product not found.");
             }
-        });
-
-        if (!productOptional.isPresent()) {
-            System.out.println("Product not found.");
-        }
+     //   }
     }
 
     public double calculateTotalTicket() {
@@ -57,6 +61,4 @@ public class Ticket implements Serializable {
         }
         return total;
     }
-    */
-
 }
