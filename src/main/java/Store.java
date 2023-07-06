@@ -12,12 +12,6 @@ public class Store implements Serializable {
 
     private static Store instance;
 
-    private Store(String name){
-        this.name = name;
-        this.productList = new ArrayList<>();
-        this.ticketList = new ArrayList<>();
-    }
-
     private Store() {
         this.productList = new ArrayList<>();
         this.ticketList = new ArrayList<>();

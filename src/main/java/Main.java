@@ -24,19 +24,19 @@ public class Main {
 //                    Menu.removeProduct();
                     break;
                 case 5:
-//                    Menu.printStock();
+                    Menu.printStock();
                     break;
                 case 6:
                     Menu.printTotalValue();
                     break;
                 case 7:
-                    Menu.createTicket();
+//                    Menu.createTicket();
                     break;
                 case 8:
-                    Menu.printAllTickets();
+//                    Menu.printAllTickets();
                     break;
                 case 9:
-                    Menu.printTotalTickets();
+//                    Menu.printTotalTickets();
                     break;
                 case 0:
                     System.out.println("Gràcies per la teva visita");
@@ -50,10 +50,6 @@ public class Main {
 
     private static int showMenu(Scanner sc) {
         System.out.println("""
-<<<<<<< HEAD
-=======
-
->>>>>>> 3a40edf6f44b0c9b6365a3e797728b4917e5ea77
                     ***** MENU *****
                     1. Crear floristeria
                     2. Afegir un producte

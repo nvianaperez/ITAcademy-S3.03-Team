@@ -26,7 +26,7 @@ public class Menu {
                 System.out.println("El producte no es troba al catàleg. Afegeix-lo");
                 Product newProduct = Menu.createProduct();
                 JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
-                //ToDo: imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
+                //imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
                 Reader.writeJsonProduct(newJsonProduct);
             }
         } else {
@@ -36,6 +36,8 @@ public class Menu {
 
     private static JSONObject createJsonProduct(Product newProduct) {
         JSONObject jsonProduct = new JSONObject();
+        //ToDo: hacer método getLastId()
+//        jsonProduct.put("id",newProduct.getLastId);
         jsonProduct.put("name", newProduct.getName());
         jsonProduct.put("stock", newProduct.getStock());
         jsonProduct.put("price", newProduct.getPrice());
@@ -89,28 +91,33 @@ public class Menu {
         return category;
     }
 
-
-
-//    private static Product searchProductInProductList(String newNameTree) {
-//        //ToDo: revisar si se puede hacer con un bucle while o for con el found como tecla de escpae si ya lo encuentra
-//        for (Product product : store.getProducts()) {
-//            if (product.getName().equalsIgnoreCase(newNameTree)) {
-//                return product;
-//            }
-//        }
-//        return null;
-//    }
-
-
     public static void printProducts() {
         int i = 0;
         boolean esc = false;
 
-        if (Txt.checkStoreExist() != null) {
+        if (Reader.checkStoreExist()) {
             while(i < s0.getProducts().size() && !esc){
                 if(s0.getProducts().size() != 0){
                     System.out.println(s0.getProducts().get(i).toString());
-                    //Introducir el metodo para persistencia
+                }else{
+                    System.out.println("La botiga no disposa encara d´existències");
+                    System.out.println("");
+                    esc = true;
+                }
+            }
+        }else {
+            System.out.println("Primer crea la botiga");
+        }
+    }
+
+    public static void printStock() {
+        int i = 0;
+        boolean esc = false;
+
+        if (Reader.checkStoreExist()) {
+            while(i < s0.getProducts().size() && !esc){
+                if(s0.getProducts().size() != 0){
+                    System.out.println(s0.getProducts().get(i).toString() + " " + s0.getProducts().get(i).getStock() + " Unitats");
                 }else{
                     System.out.println("La botiga no disposa encara d´existències");
                     System.out.println("");
@@ -136,56 +143,55 @@ public class Menu {
         System.out.println("El valor total de les exitències de la floristeria es de : " + total + "€");
     }
 
+//
+//    public static void createTicket () {
+//        if (Reader.checkStoreExist()) {
+//            Ticket ticket = new Ticket();
+//            s0.getTickets().add(ticket);
+//
+//            if (s0.getProducts() != null) {
+//                ticket.addProductsToTicket(User.readString("What product do you want to add to the ticket?"),
+//                        User.readInteger("How many products of this type do you want to add?"), s0);
+////                Reader.writeJsonProduct(ticket);
+//            } else {
+//                System.out.println("There are no products in the store");
+//            }
+//        }
+//    }
+//
+//    public static void printAllTickets() {
+//        Store s0 = Txt.checkStoreExist();
+//        if (s0 != null) {
+//            if (s0.getTickets() != null) {
+//                s0.getTickets().forEach(ticket -> System.out.println(ticket.ticketToString()));
+//            }else{
+//                System.out.println("There isn´t tickets at this moment");
+//            }
+//        } else {
+//            System.out.println("First create a store");
+//        }
+//    }
+//
+//    public static void printTotalTickets() {
+//        Store s0 = Txt.checkStoreExist();
+//        double total = 0;
+//
+//        if (s0 != null) {
+//            List<Ticket> tickets = s0.getTickets();
+//
+//            if (tickets != null && !tickets.isEmpty()) {
+//                for (Ticket ticket : tickets) {
+//                    total += ticket.calculateTotalTicket();
+//                }
+//                System.out.println("Total amount sold: " + total);
+//            } else {
+//                System.out.println("There are no tickets at this moment");
+//            }
+//        } else {
+//            System.out.println("First create a store");
+//        }
+//    }
 
-    public static void createTicket () {
-        Store s0 = Txt.checkStoreExist();
-
-        if (s0 != null) {
-            Ticket ticket = new Ticket();
-            s0.getTickets().add(ticket);
-
-            if (s0.getProducts() != null) {
-                ticket.addProductsToTicket(User.readString("What product do you want to add to the ticket?"),
-                        User.readInteger("How many products of this type do you want to add?"), s0);
-                Txt.writeTicket(ticket);
-            } else {
-                System.out.println("There are no products in the store");
-            }
-        }
-    }
-
-    public static void printAllTickets() {
-        Store s0 = Txt.checkStoreExist();
-        if (s0 != null) {
-            if (s0.getTickets() != null) {
-                s0.getTickets().forEach(ticket -> System.out.println(ticket.ticketToString()));
-            }else{
-                System.out.println("There isn´t tickets at this moment");
-            }
-        } else {
-            System.out.println("First create a store");
-        }
-    }
-
-    public static void printTotalTickets() {
-        Store s0 = Txt.checkStoreExist();
-        double total = 0;
-
-        if (s0 != null) {
-            List<Ticket> tickets = s0.getTickets();
-
-            if (tickets != null && !tickets.isEmpty()) {
-                for (Ticket ticket : tickets) {
-                    total += ticket.calculateTotalTicket();
-                }
-                System.out.println("Total amount sold: " + total);
-            } else {
-                System.out.println("There are no tickets at this moment");
-            }
-        } else {
-            System.out.println("First create a store");
-        }
-    }
 
 }
 
