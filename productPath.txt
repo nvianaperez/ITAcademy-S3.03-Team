@@ -1,3 +1,0 @@
-{"price":5.5,"name":"bonsai","stock":5,"category":"TREE","height":5}
-{"price":5,"name":"llimoner","stock":5,"category":"TREE","height":5}
-{"price":5,"name":"prod3","stock":5,"category":"TREE","height":5}
