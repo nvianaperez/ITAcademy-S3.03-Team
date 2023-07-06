@@ -2,16 +2,16 @@ import java.util.List;
 
 public class Menu {
 
+  
     private static Store s0;
-
-
+    private static Ticket ticket;
+  
     public static void createStore() {
 
-        Store s0 = Store.getInstance();
-
-        if(Txt.checkStoreExist() != null) {
-            Menu.s0 = Txt.checkStoreExist();
-            System.out.println("Ja tens una botiga creada, amb nom: " + Menu.s0.getName());
+        if (Txt.checkStoreExist() != null) {
+            s0 = Txt.checkStoreExist();
+            System.out.println("Ja tens una botiga creada, amb nom: " + store.getName());
+   
         } else {
             s0.setName(User.readString("Entre el nom de la botiga"));
             Txt.writeStore(s0);
@@ -78,53 +78,7 @@ public class Menu {
             } else {
                 String newNameDeco = User.readString("Quin tipus de decoració vols afegir?");
 
-                if (searchProductInProductList(newNameDeco) && Txt.productFoundInProductTxt(newNameDeco)) {
-                    Product updatedDeco = updateProduct();
-                    updatedDeco.addStock(User.readInteger("Quantes unitats de " + updatedDeco.getName() + " vols afegir?"));
-                    System.out.println("Stock del producte " + updatedDeco.getName() + " actualitzat en la llista de productes");
-                    System.out.println(updatedDeco);
-                    //actualizar producto en el Txt de producto
-                    Txt.writeProductToTxt(updatedDeco);
-                } else {
-                    Product newDeco = new Deco(
-                            newNameDeco,
-                            User.readInteger("Quantes unitats de " + newNameDeco + " vols afegir?"),
-                            User.readFloat("Quin preu tindrà el producte " + newNameDeco + " ?"),
-                            Product.Category.DECO,
-                            User.readString("De quin material serà la decoració de "+newNameDeco+" ?\n\t1. Fusta\n\t2.Plàstic")
-                    );
-                    s0.getProducts().add(newDeco);
-                    System.out.println("Nou producte afegit: " + newDeco);
-                    System.out.println(s0.getProducts());
-                    Txt.writeProductToTxt(newDeco);
-                }
-            }
 
-        } else {
-            System.out.println("Primer crea la botiga");
-        }
-    }
-
-    private static Product updateProduct() {
-        return new Product("hacerMétodo");
-    }
-
-    private static boolean searchProductInProductList(String newProductName) {
-        if (Txt.checkStoreExist() != null) {
-            s0 = Txt.checkStoreExist();
-            for (Product product : s0.getProducts()) {
-                if (product.getName().equalsIgnoreCase(newProductName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
-/*
-    public static void addTree() {
-        if(Txt.checkStoreExist() != null) {
             String newNameTree = User.readString("Quin tipus d'arbre vols afegir?");
             //buscarlo en la lista de productos y en el Txt de products
             Product treeFoundInProductList = searchProductInProductList(newNameTree);
@@ -155,7 +109,7 @@ public class Menu {
         }
 
     }
- */
+ 
 
 //    private static Product searchProductInProductList(String newNameTree) {
 //        //ToDo: revisar si se puede hacer con un bucle while o for con el found como tecla de escpae si ya lo encuentra
@@ -167,7 +121,7 @@ public class Menu {
 //        return null;
 //    }
 
-/*
+
     public static void printProducts() {
 
         //     1) look for store
@@ -196,6 +150,7 @@ public class Menu {
             System.out.println("Primer crea la botiga");
         }
     }
+
     public static void removeTree() {
 
         //     1) look for store
@@ -279,13 +234,50 @@ public class Menu {
                 System.out.println("Aquesta decoració no es troba a la llista");
             }
 
+
         } else {
             System.out.println("Primer crea la botiga");
         }
 
     }
 
-    public static void printStock() {
+
+    public static void printTotalValue() {
+
+        //     1) look for store
+//        5) escribir txt
+
+        //ToDo: Habria que crear un writeStoreValueToTxt y readStoreValueFromTxt para crear la persistencia?
+
+        float total = 0f;
+
+        if (Txt.checkStoreExist() != null) {
+            for(Product p : store.getProducts()){
+                total += p.getPrice();
+                }
+            }else {
+            System.out.println("Primer crea la botiga");
+        }
+        System.out.println("El valor total de les exitències de la floristeria es de : " + total + "€");
+    }
+    
+   
+   public static void addTicket() {
+//        1) look for store
+//        2) if exist, add stock.
+//        3) escribir txt
+
+        if (Txt.checkStoreExist() != null) {
+            store = Txt.checkStoreExist();
+            Ticket ticket = new Ticket();
+            store.getTickets().add(ticket);
+            if (store.getProducts() != null) {
+                ticket.addProductsToTicket(User.readString("What product do you want to add to the ticket?"), User.readInteger("How many products of this type do you want to add?"), store);
+                Txt.writeTicket(ticket);
+            } else {
+                System.out.println("There are no products in the store");
+            }
+              public static void printStock() {
 
         //     1) look for store
 //        2) check if the tree already exist
@@ -313,25 +305,6 @@ public class Menu {
             System.out.println("Primer crea la botiga");
         }
     }
-    public static void printTotalValue() {
-
-        //     1) look for store
-//        5) escribir txt
-
-        //ToDo: Habria que crear un writeStoreValueToTxt y readStoreValueFromTxt para crear la persistencia?
-
-        float total = 0f;
-
-        if (Txt.checkStoreExist() != null) {
-            for(Product p : store.getProducts()){
-                total += p.getPrice();
-                }
-            }else {
-            System.out.println("Primer crea la botiga");
-        }
-        System.out.println("El valor total de les exitències de la floristeria es de : " + total + "€");
-    }
-*/
 
 }
 

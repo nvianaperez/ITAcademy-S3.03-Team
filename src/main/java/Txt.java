@@ -26,6 +26,7 @@ public class Txt {
 
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+
                 store = (Store) ois.readObject();
             } catch (EOFException ex) {
                 System.out.println("Final del fitxer");
@@ -89,6 +90,19 @@ public class Txt {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, true))) {
             if(newProduct != null) {
                 oos.writeObject(newProduct+"\n");
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void writeTicket(Ticket ticket) {
+        File file = new File(ticketPath);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+            if(ticket != null) {
+                oos.writeObject(ticket);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
