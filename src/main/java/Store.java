@@ -39,7 +39,7 @@ public class Store implements Serializable {
     }
 
     public List<Product> getProducts() {
-        return Txt.readProductTxt();
+        return Reader.readAllProductsFromTxt();
     }
 
     public void addProductToProducts(Product product) {

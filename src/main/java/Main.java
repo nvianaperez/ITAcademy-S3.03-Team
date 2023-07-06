@@ -18,31 +18,25 @@ public class Main {
                     Menu.addProduct();
                     break;
                 case 3:
-//                    Menu.printProducts();
+                    Menu.printProducts();
                     break;
                 case 4:
-//                    Menu.removeTree();
+//                    Menu.removeProduct();
                     break;
                 case 5:
-//                    Menu.removeFlower();
-                    break;
-                case 6:
-//                    Menu.removeDeco();
-                    break;
-                case 7:
 //                    Menu.printStock();
                     break;
+                case 6:
+                    Menu.printTotalValue();
+                    break;
+                case 7:
+                    Menu.createTicket();
+                    break;
                 case 8:
-//                    Menu.printTotalValue();
+                    Menu.printAllTickets();
                     break;
                 case 9:
-                     Menu.addTicket();
-                    break;
-                case 10:
-//                    Menu.printAllTickets();
-                    break;
-                case 11:
-//                    Menu.printTotalTickets();
+                    Menu.printTotalTickets();
                     break;
                 case 0:
                     System.out.println("Gràcies per la teva visita");
@@ -64,18 +58,16 @@ public class Main {
                     1. Crear floristeria
                     2. Afegir un producte
                     3. Veure els tipus de producte de la floristeria
-                    4. Retirar un arbre
-                    5. Retirar una flor
-                    6. Retirar decoració
-                    7. Veure stock de la floristeria
-                    8. Veure el valor total de la floristeria
-                    9. Crear un ticket de compra
-                    10. Vuere el històric de compres
-                    11. Vuere el total de vendes
+                    4. Retirar un producte
+                    5. Veure stock de la floristeria
+                    6. Veure el valor total de la floristeria
+                    7. Crear un ticket de compra
+                    8. Vuere el històric de compres
+                    9. Vuere el total de vendes
                     0. Sortir de l'aplicació
                     """);
 
-        return User.readIntegerMenu("Introdueix una opció [0-11]: ");
+        return User.readIntegerMenu("Introdueix una opció [0-9]: ");
 
 
     }

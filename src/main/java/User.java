@@ -14,7 +14,7 @@ public class User {
             try {
                 System.out.println(message);
                 input = sc.nextInt();
-                if(input < 0 || input > 13) throw new RuntimeException();
+                if(input < 0 || input > 9) throw new RuntimeException();
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
