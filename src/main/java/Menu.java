@@ -20,12 +20,12 @@ public class Menu {
             //ToDO: Passar les línees del txt com a objectes i ficar-les en un ArrayList json
             s0.getProducts().stream().forEach(p -> System.out.println(p.toString())); //Para saber que funciona
 
-            int id = User.readInteger("Id del Producte: ");
+            int id = User.readInteger("Id del Producte: ");// Chequeo del Id a falta del getId del Json
             String name = User.readString("Nom del producte: ");
 
-            String idS = String.valueOf(id);
+            String idS = String.valueOf(id);// Chequeo del Id a falta del getId del Json
 
-            if (Reader.checkProductExist(idS,name)) {
+            if (Reader.checkProductExist(idS,name)) {// Chequeo del Id a falta del getId del Json
                 Product product = Reader.readProductObjectFromJson(idS,name);
                 int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
                 product.addStock(quantity);
