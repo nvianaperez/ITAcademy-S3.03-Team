@@ -33,7 +33,7 @@ public class Store implements Serializable {
     }
 
     public List<Product> getProducts() {
-        return Reader.readAllProductsFromTxt();
+        return this.productList;
     }
 
     public void addProductToProducts(Product product) {
