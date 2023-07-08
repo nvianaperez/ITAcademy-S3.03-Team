@@ -16,16 +16,14 @@ public class Menu {
     public static void addProduct() {
         if (Reader.checkStoreExist()) {
 
-            //ToDO: Passar les línees del txt com a objectes i ficar-les en un ArrayList json // Hi ha una classe que itera jsonObjects!
+            //Menu.printProducts();
 
-            s0.getProducts().stream().forEach(p -> System.out.println(p.toString())); //Para saber que funciona
-
-            int idProduct = User.readInteger("Id del Producte: ");// Chequeo del Id a falta del getId del Json
+            int idProduct = User.readInteger("Id del Producte: ");
             String name = User.readString("Nom del producte: ");
 
-            String idS = String.valueOf(idProduct);// Chequeo del Id a falta del getId del Json
+            String idS = String.valueOf(idProduct);
 
-            if (Reader.checkProductExist(idS,name)) {// Chequeo del Id a falta del getId del Json
+            if (Reader.checkProductExist(idS,name)) {
                 Product product = Reader.readProductObjectFromJson(idS,name);
                 int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
                 product.addStock(quantity);
@@ -46,9 +44,7 @@ public class Menu {
 
     private static JSONObject createJsonProduct(Product newProduct) {
         JSONObject jsonProduct = new JSONObject();
-        int lastId = Reader.getLastId();
-
-        //TODO: crear getLastId()
+        int lastId = Reader.readLastId();
 
         jsonProduct.put("idProduct", lastId + 1);
         jsonProduct.put("name", newProduct.getName());
@@ -106,9 +102,7 @@ public class Menu {
         }
         return category;
     }
-
     public static void printProducts() {
-
        Reader.readAllProductsFromTxt();
     }
 

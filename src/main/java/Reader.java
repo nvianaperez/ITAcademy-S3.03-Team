@@ -11,7 +11,7 @@ public class Reader {
     private static final String ticketPath = "ticketPath.txt";
     private static final String storePath = "storePath.txt";
 
-
+    // ToDO: falta cuadrar los id del caché, aunque no es demasiado relevante
     //ToDo: Ja tens una botiga creada amb nom: null --> falta método readJsonStore()
     public static boolean checkStoreExist() {
         boolean found = false;
@@ -36,7 +36,7 @@ public class Reader {
         return found;
     }
 
-    public static boolean checkProductExist(String idS, String name) {// Chequeo del Id a falta del getIdProduct del Json
+    public static boolean checkProductExist(String idS, String name) {
         boolean found = false;
         File file = new File(productPath);
 
@@ -44,7 +44,7 @@ public class Reader {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while (line != null) {
-                    if (line.contains(idS) && line.contains(name)) {// Chequeo del Id a falta del getIdProduct del Json
+                    if (line.contains(idS) && line.contains(name)) {
                         found = true;
                         break;
                     }
@@ -90,7 +90,7 @@ public class Reader {
         }
     }
 
-    public static Product readProductObjectFromJson(String idS, String name) {// Chequeo del Id a falta del getIdProduct del Json
+    public static Product readProductObjectFromJson(String idS, String name) {
         File file = new File(productPath);
         Product product = null;
 
@@ -99,7 +99,7 @@ public class Reader {
                 String line = br.readLine();
                 while (line != null) {
                     //ToDo: comprobar que también chequea el id
-                    if (line.contains(name) && line.contains(idS)) { // Chequeo del Id a falta del getIdProduct del Json
+                    if (line.contains(name) && line.contains(idS)) {
                         JSONObject json = new JSONObject(line);
                         name = json.getString("name");
                         int stock = json.getInt("stock");
@@ -218,7 +218,7 @@ public class Reader {
         return jsonList;
     }
 
-    public static int getLastId() {
+    public static int readLastId() {
 
         int lastId;
         int i;

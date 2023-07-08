@@ -87,7 +87,7 @@ public class Writer {
         }
     }
 
-    public static Product readProductObjectFromJson(String idS,String name) {// Chequeo del Id a falta del getId del Json
+    public static Product readProductObjectFromJson(String idS,String name) {
         File file = new File(productPath);
         Product product = null;
 
@@ -96,7 +96,7 @@ public class Writer {
                 String line = br.readLine();
                 while(line != null) {
                     //ToDo: comprobar que también chequea el id
-                    if(line.contains(name) && line.contains(idS)) { // Chequeo del Id a falta del getId del Json
+                    if(line.contains(name) && line.contains(idS)) {
                         JSONObject json = new JSONObject(line);
                         name = json.getString("name");
                         int stock = json.getInt("stock");
@@ -129,11 +129,4 @@ public class Writer {
         return product;
     }
 
-
-    //ToDo: hacer método readAllProductsFromTxt()
-    public static List<Product> readAllProductsFromTxt() {
-
-
-        return null;
-    }
 }
