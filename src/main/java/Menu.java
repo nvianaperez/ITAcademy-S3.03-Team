@@ -1,6 +1,5 @@
-import org.json.JSONObject;
 
-import java.util.List;
+import org.json.JSONObject;
 
 public class Menu {
 
@@ -17,13 +16,14 @@ public class Menu {
     public static void addProduct() {
         if (Reader.checkStoreExist()) {
 
-            //ToDO: Passar les línees del txt com a objectes i ficar-les en un ArrayList json
+            //ToDO: Passar les línees del txt com a objectes i ficar-les en un ArrayList json // Hi ha una classe que itera jsonObjects!
+
             s0.getProducts().stream().forEach(p -> System.out.println(p.toString())); //Para saber que funciona
 
-            int id = User.readInteger("Id del Producte: ");// Chequeo del Id a falta del getId del Json
+            int idProduct = User.readInteger("Id del Producte: ");// Chequeo del Id a falta del getId del Json
             String name = User.readString("Nom del producte: ");
 
-            String idS = String.valueOf(id);// Chequeo del Id a falta del getId del Json
+            String idS = String.valueOf(idProduct);// Chequeo del Id a falta del getId del Json
 
             if (Reader.checkProductExist(idS,name)) {// Chequeo del Id a falta del getId del Json
                 Product product = Reader.readProductObjectFromJson(idS,name);
@@ -46,8 +46,11 @@ public class Menu {
 
     private static JSONObject createJsonProduct(Product newProduct) {
         JSONObject jsonProduct = new JSONObject();
-        //ToDo: hacer método getLastId()
-//       jsonProduct.put("id",newProduct.getLastId);
+        int lastId = Reader.getLastId();
+
+        //TODO: crear getLastId()
+
+        jsonProduct.put("idProduct", lastId + 1);
         jsonProduct.put("name", newProduct.getName());
         jsonProduct.put("stock", newProduct.getStock());
         jsonProduct.put("price", newProduct.getPrice());
@@ -105,22 +108,8 @@ public class Menu {
     }
 
     public static void printProducts() {
-        int i = 0;
-        boolean esc = false;
 
-        if (Reader.checkStoreExist()) {
-            while(i < s0.getProducts().size() && !esc){
-                if(s0.getProducts().size() != 0){
-                    System.out.println(s0.getProducts().get(i).toString());
-                }else{
-                    System.out.println("La botiga no disposa encara d´existències");
-                    System.out.println("");
-                    esc = true;
-                }
-            }
-        }else {
-            System.out.println("Primer crea la botiga");
-        }
+       Reader.readAllProductsFromTxt();
     }
 
     public static void printStock() {

@@ -33,7 +33,7 @@ public class Writer {
 
         return found;
     }
-    public static boolean checkProductExist(String name) {
+    public static boolean checkProductExist(String idS,String name) {// Chequeo del Id a falta del getId del Json
         boolean found = false;
         File file = new File(productPath);
 
@@ -41,7 +41,7 @@ public class Writer {
             try(BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while(line != null) {
-                    if(line.contains(name)) {
+                    if(line.contains(idS) && line.contains(name)) {// Chequeo del Id a falta del getId del Json
                         found = true;
                         break;
                     }
@@ -87,7 +87,7 @@ public class Writer {
         }
     }
 
-    public static Product readProductObjectFromJson(int id,String name) {
+    public static Product readProductObjectFromJson(String idS,String name) {// Chequeo del Id a falta del getId del Json
         File file = new File(productPath);
         Product product = null;
 
@@ -96,11 +96,11 @@ public class Writer {
                 String line = br.readLine();
                 while(line != null) {
                     //ToDo: comprobar que también chequea el id
-                    if(line.contains(name)) {
+                    if(line.contains(name) && line.contains(idS)) { // Chequeo del Id a falta del getId del Json
                         JSONObject json = new JSONObject(line);
-                        float price = json.getFloat("price");
                         name = json.getString("name");
                         int stock = json.getInt("stock");
+                        float price = json.getFloat("price");
                         String category = json.getString("category");
                         if(category.equals("TREE")) {
                             float height = json.getFloat("height");
@@ -109,10 +109,12 @@ public class Writer {
                         if(category.equals("FLOWER")) {
                             String colour = json.getString("colour");
                             product = new Flower(name,stock,price, Product.Category.FLOWER, colour);
+
                         }
                         if(category.equals("DECO")) {
                             String decoType = json.getString("decoType");
                             product = new Deco(name, stock, price, Product.Category.DECO, decoType);
+
                         }
                         break;
                     }
@@ -127,11 +129,11 @@ public class Writer {
         return product;
     }
 
+
     //ToDo: hacer método readAllProductsFromTxt()
     public static List<Product> readAllProductsFromTxt() {
+
+
         return null;
     }
 }
-
-
-

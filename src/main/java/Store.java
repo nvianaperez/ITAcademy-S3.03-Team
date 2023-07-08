@@ -12,14 +12,15 @@ public class Store implements Serializable {
 
     private static Store instance;
 
-    private Store() {
+    private Store(String name) {
+        this.name = name;
         this.productList = new ArrayList<>();
         this.ticketList = new ArrayList<>();
     }
 
     public static Store getInstance(){
         if(instance == null){
-            instance = new Store();
+            instance = new Store("Default");
         }
         return instance;
     }
