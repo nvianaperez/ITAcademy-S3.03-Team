@@ -12,14 +12,15 @@ public class Store implements Serializable {
 
     private static Store instance;
 
-    private Store() {
+    private Store(String name) {
+        this.name = name;
         this.productList = new ArrayList<>();
         this.ticketList = new ArrayList<>();
     }
 
     public static Store getInstance(){
         if(instance == null){
-            instance = new Store();
+            instance = new Store("Default");
         }
         return instance;
     }
@@ -33,7 +34,7 @@ public class Store implements Serializable {
     }
 
     public List<Product> getProducts() {
-        return Reader.readAllProductsFromTxt();
+        return this.productList;
     }
 
     public void addProductToProducts(Product product) {

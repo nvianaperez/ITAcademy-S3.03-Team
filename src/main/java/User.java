@@ -18,8 +18,10 @@ public class User {
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
+                sc.nextLine();
             } catch (Exception e) {
                 System.out.println("Error al introduir el número");
+                sc.nextLine();
             }
         }
         return input;

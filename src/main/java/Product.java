@@ -31,11 +31,12 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
+    public int getIdProduct() {
         return this.idProduct;
     }
 
     public void setId(int id) {
+
         this.idProduct = idProduct;
     }
 
@@ -69,19 +70,19 @@ public class Product implements Serializable {
 
     public void addStock(int quantity){
              this.stock = getStock() + quantity;
-             System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
+             System.out.println("Updated Stock:   Name : " + this.name + " Stock : " + this.getStock());
     }
     public void removeStock(int quantity){
 
             this.stock = this.getStock() - quantity;
-            System.out.println("Updated Stock:   Name : " + this.name + " || " + " Stock : " + this.getStock());
+            System.out.println("Updated Stock:   Name : " + this.name  + " Stock : " + this.getStock());
         }
 
         @Override
         public String toString(){
 
-        return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name + " || "
-                + " Precio del producto" + this.price + "€";
+        return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name +
+                " Precio del producto" + this.price + "€";
         }
 
 
