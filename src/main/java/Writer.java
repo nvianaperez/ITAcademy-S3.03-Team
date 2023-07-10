@@ -95,7 +95,6 @@ public class Writer {
             try(BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while(line != null) {
-                    //ToDo: comprobar que también chequea el id
                     if(line.contains(name) && line.contains(idS)) {
                         JSONObject json = new JSONObject(line);
                         name = json.getString("name");

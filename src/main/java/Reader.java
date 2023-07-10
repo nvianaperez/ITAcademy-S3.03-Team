@@ -11,8 +11,7 @@ public class Reader {
     private static final String ticketPath = "ticketPath.txt";
     private static final String storePath = "storePath.txt";
 
-    // ToDO: falta cuadrar los id del caché, aunque no es demasiado relevante
-    //ToDo: Ja tens una botiga creada amb nom: null --> falta método readJsonStore()
+    //ToDo: Ja tens una botiga creada amb nom: Default --> falta método readJsonStore()
     public static boolean checkStoreExist() {
         boolean found = false;
         File file = new File(storePath);
@@ -98,7 +97,6 @@ public class Reader {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while (line != null) {
-                    //ToDo: comprobar que también chequea el id
                     if (line.contains(name) && line.contains(idS)) {
                         JSONObject json = new JSONObject(line);
                         name = json.getString("name");
