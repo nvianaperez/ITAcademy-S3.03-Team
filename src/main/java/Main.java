@@ -22,7 +22,7 @@ public class Main {
                     Menu.printProducts();
                     break;
                 case 4:
-//                    Menu.removeProduct();
+                    Menu.removeProduct();
                     break;
                 case 5:
                     Menu.printStock();
