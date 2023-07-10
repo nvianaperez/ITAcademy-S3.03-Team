@@ -97,9 +97,11 @@ public class Writer {
         if (file.exists()) {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
+
                 while (line != null) {
 
                     if (line.contains(name) && line.contains(idS)) {
+
                         JSONObject json = new JSONObject(line);
                         name = json.getString("name");
                         int stock = json.getInt("stock");
