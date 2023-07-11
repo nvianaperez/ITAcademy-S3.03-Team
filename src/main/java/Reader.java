@@ -35,7 +35,7 @@ public class Reader {
         return found;
     }
 
-    public static boolean checkProductExist(String idS, String name) {
+    public static boolean checkProductExist( String name) {
         boolean found = false;
         File file = new File(productPath);
 
@@ -43,7 +43,7 @@ public class Reader {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while (line != null) {
-                    if (line.contains(idS) && line.contains(name)) {
+                    if (line.contains(name)) {
                         found = true;
                         break;
                     }
@@ -89,7 +89,49 @@ public class Reader {
         }
     }
 
-    public static Product readProductObjectFromJson(String idS, String name) {
+    public static void writeJsonTicket(JSONObject newJsonTicket) {
+        File file = new File(ticketPath);
+
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (file.exists()) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
+                bw.write(newJsonTicket + "\n");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    public static Ticket readProductFromTicket() {
+        File file = new File(productPath);
+        Ticket ticket = new Ticket();
+        Product product;
+
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line = br.readLine();
+                while (line != null) {
+
+                        JSONObject json = new JSONObject(line);
+                        int id = readLastId();
+                        String products = json.getString("Product");
+                        int quantity = json.getInt("Quantity");
+                        float price = json.getFloat("Price");
+                        product = new Product(products, quantity, price);
+                        ticket.getProducts().add(product);
+                        break;
+                    }
+                    line = br.readLine();
+                } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return ticket;
+    }
+    public static Product readProductObjectFromJson( String name) {
         File file = new File(productPath);
         Product product = null;
 
@@ -97,7 +139,7 @@ public class Reader {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while (line != null) {
-                    if (line.contains(name) && line.contains(idS)) {
+                    if (line.contains(name)) {
                         JSONObject json = new JSONObject(line);
                         name = json.getString("name");
                         int stock = json.getInt("stock");
