@@ -18,7 +18,7 @@ public class Deco extends Product{
 
     @Override
     public String toString() {
-        return "Id: " + super.getIdProduct() + " Name : " + super.getName() + " DecoType: "
+        return "Name : " + super.getName() + " DecoType: "
                 + this.decoType + " Price: " + super.getPrice() + " Stock: " + super.getStock();
     }
 }

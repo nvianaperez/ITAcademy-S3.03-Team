@@ -29,15 +29,22 @@ public class Menu {
                 Product product = Reader.readProductObjectFromJson(name);
                 int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
                 product.addStock(quantity);
+                //ToDo: sobrescribir la linea del Txt y cambiar solo el atributo stock
+                JSONObject newJsonProduct = Menu.createJsonProduct(product);
+                Reader.writeJsonProduct(newJsonProduct);
                 System.out.println(product);
 
             } else {
-                System.out.println("El producte no es troba al catàleg. Afegeix-lo");
-                Product newProduct = Menu.createProduct();
-                JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
-                //imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
-                Reader.writeJsonProduct(newJsonProduct);
-
+                System.out.println("El producte '"+name+"' no es troba al catàleg");
+                Reader.readAllProductsFromTxt();
+                String option = User.readString("Vols afegir un producte nou? [Si / No]");
+                if (option.equalsIgnoreCase("si")) {
+                    Product newProduct = Menu.createProduct(name);
+                    JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
+                    //imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
+                    Reader.writeJsonProduct(newJsonProduct);
+                    System.out.println(newProduct);
+                }
             }
         } else {
             System.out.println("Primer crea la botiga");
@@ -47,7 +54,7 @@ public class Menu {
     private static JSONObject createJsonProduct(Product newProduct) {
         JSONObject jsonProduct = new JSONObject();
         int lastId = Reader.readLastId();
-
+        //ToDo: cuando solo añadimos stock al producto, el idProduct no debería modificarse
         jsonProduct.put("idProduct", lastId + 1);
         jsonProduct.put("name", newProduct.getName());
         jsonProduct.put("stock", newProduct.getStock());
@@ -65,10 +72,10 @@ public class Menu {
         return jsonProduct;
     }
 
-    private static Product createProduct() {
+    private static Product createProduct(String name) {
         Product product = null;
         Product.Category category = Menu.askForCategory();
-        String name = User.readString("Nom del producte: ");
+        name = name.toLowerCase().trim();
         int stock = User.readInteger("Quantitat d'estoc: ");
         float price = User.readFloat("Preu del producte: ");
 
