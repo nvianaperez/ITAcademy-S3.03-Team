@@ -39,6 +39,7 @@ public class User {
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
+                sc.next();
             } catch (Exception e) {
                 System.out.println("Error: introdueix un número positiu");
             }
