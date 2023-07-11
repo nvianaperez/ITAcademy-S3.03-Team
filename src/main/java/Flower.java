@@ -16,7 +16,9 @@ public class Flower extends Product{
 
     @Override
     public String toString() {
-        return "Id: " + super.getIdProduct() + " Name : " + super.getName() +  " Colour: "
-                + this.colour + " Price: " + super.getPrice() + " Stock : " + super.getStock();
+
+        return "Name : " + super.getName() +  " Colour: "
+                + this.colour + " Price: " + super.getPrice() +  " Stock: " + super.getStock();
+
     }
 }

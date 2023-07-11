@@ -93,7 +93,7 @@ public class Product implements Serializable {
         @Override
         public String toString(){
 
-        return "Id del producto: " + this.idProduct + " || " + "Nombre del producto: " + this.name +
+        return "Nombre del producto: " + this.name +
                 " Precio del producto" + this.price + "€";
         }
 
