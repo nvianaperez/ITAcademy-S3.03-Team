@@ -20,5 +20,6 @@ public class Deco extends Product{
     public String toString() {
         return "Name : " + super.getName() + " DecoType: "
                 + this.decoType + " Price: " + super.getPrice() + " Stock: " + super.getStock();
+
     }
 }

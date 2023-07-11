@@ -22,7 +22,7 @@ public class Main {
                     Menu.printProducts();
                     break;
                 case 4:
-//                    Menu.removeProduct();
+                    Menu.removeProduct();
                     break;
                 case 5:
                     Menu.printStock();
@@ -31,7 +31,7 @@ public class Main {
                     Menu.printTotalValue();
                     break;
                 case 7:
-//                    Menu.createTicket();
+                    Menu.createTicket();
                     break;
                 case 8:
 //                    Menu.printAllTickets();

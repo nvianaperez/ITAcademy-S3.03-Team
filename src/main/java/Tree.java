@@ -18,8 +18,10 @@ public class Tree extends Product{
 
     @Override
     public String toString() {
+
         return "Name : " + super.getName()  + " Height: "
                 + this.heigh + " Price: " + super.getPrice() + " Stock: " + super.getStock();
+
     }
 
 
