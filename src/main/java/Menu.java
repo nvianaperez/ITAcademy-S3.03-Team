@@ -1,10 +1,11 @@
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-
     static Store s0 = Store.getInstance();
     public static void createStore() {
         if (Reader.checkStoreExist()) {
@@ -16,9 +17,8 @@ public class Menu {
     }
 
     public static void addProduct() {
-        if (Reader.checkStoreExist()) {
 
-            //Menu.printProducts();
+        if (Reader.checkStoreExist()) {
 
           //  int idProduct = User.readInteger("Id del Producte: ");
             String name = User.readString("Nom del producte: ");
@@ -108,37 +108,117 @@ public class Menu {
        Reader.readAllProductsFromTxt();
     }
 
-    public static void printStock() {
-        int i = 0;
+    public static void addStock(){
+
+        int j = 0;
         boolean esc = false;
+        int posProdu = -1;
+
+        ArrayList<Product> llistaProductes = Reader.getLlistaproductesTxt();
+        llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
+        System.out.println("");
 
         if (Reader.checkStoreExist()) {
-            while(i < s0.getProducts().size() && !esc){
-                if(s0.getProducts().size() != 0){
-                    System.out.println(s0.getProducts().get(i).toString() + " " + s0.getProducts().get(i).getStock() + " Unitats");
-                }else{
-                    System.out.println("La botiga no disposa encara d´existències");
-                    System.out.println("");
+
+            int idProduct = User.readInteger("Id del Producte: ");
+            String name = User.readString("Nom del producte: ");
+
+            while (j < llistaProductes.size() && !esc) {
+                Product p0 = llistaProductes.get(j);
+                if ((idProduct == p0.getIdProduct()) && name.equalsIgnoreCase(p0.getName())) {
+                    posProdu = j;
                     esc = true;
                 }
+                j++;
             }
-        }else {
+            if (esc) {
+                JSONArray jsonArray = Reader.createJSONArrayFromTxt();
+                JSONObject newJsonObject = jsonArray.getJSONObject(posProdu);
+                System.out.println(llistaProductes.get(posProdu).toString());
+                System.out.println("");
+
+                int quantity = (User.readInteger("Unitats d'estoc a retirar del producte existent:  "));
+
+                if(quantity > newJsonObject.getInt("stock")){
+                    newJsonObject.put("stock", llistaProductes.get(posProdu).removeStock(quantity));
+                    System.out.println("");
+                    llistaProductes.stream().forEach(p -> Reader.writeJsonProduct(newJsonObject));
+                    llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
+                    System.out.println("");
+                }else{
+                    System.out.println("La quantitat supera l´Stock!");
+                    System.out.println("");
+                }
+
+            } else {
+                System.out.println("El producte no es troba al catàleg");
+                System.out.println("");
+            }
+        } else {
             System.out.println("Primer crea la botiga");
+            System.out.println("");
         }
     }
+    public static void removeProduct() {
 
+        int j = 0;
+        boolean esc = false;
+        int posProdu = -1;
 
-    public static void printTotalValue() {
-        float total = 0f;
+        ArrayList<Product> llistaProductes = Reader.getLlistaproductesTxt();
+        llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
+        System.out.println("");
 
         if (Reader.checkStoreExist()) {
-            for(Product p : s0.getProducts()){
-                total += p.getPrice()*p.getStock();
+
+            int idProduct = User.readInteger("Id del Producte: ");
+            String name = User.readString("Nom del producte: ");
+
+                while (j < llistaProductes.size() && !esc) {
+                    Product p0 = llistaProductes.get(j);
+                    if ((idProduct == p0.getIdProduct()) && name.equalsIgnoreCase(p0.getName())) {
+                        posProdu = j;
+                        esc = true;
+                    }
+                    j++;
                 }
-            }else {
-            System.out.println("Primer crea la botiga");
+                if (esc) {
+                    JSONArray jsonArray = Reader.createJSONArrayFromTxt();
+                    JSONObject newJsonObject = jsonArray.getJSONObject(posProdu);
+                    System.out.println(llistaProductes.get(posProdu).toString());
+                    System.out.println("");
+
+                    int quantity = (User.readInteger("Unitats d'estoc a retirar del producte existent:  "));
+
+                    if(quantity < llistaProductes.get(posProdu).getStock()){
+                        newJsonObject.put("stock", llistaProductes.get(posProdu).removeStock(quantity));
+                        System.out.println("");
+
+                        llistaProductes.stream().forEach(p -> Reader.writeJsonProductStock(newJsonObject));
+                        llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
+                        System.out.println("");
+                    }else{
+                        System.out.println("La quantitat supera l´Stock!");
+                        System.out.println("");
+                    }
+
+                } else {
+                    System.out.println("El producte no es troba al catàleg");
+                    System.out.println("");
+                }
+            } else {
+                System.out.println("Primer crea la botiga");
+                System.out.println("");
+            }
         }
-        System.out.println("El valor total de les exitències de la floristeria es de : " + total + "€");
+
+    public static void printStock() {
+        Reader.readAllStockFromTxt();
+    }
+
+    public static void printTotalValue() {
+
+        Reader.totalPriceValuesFromTxt();
     }
 
     private static JSONObject createJsonTicket(Ticket newTicket) {

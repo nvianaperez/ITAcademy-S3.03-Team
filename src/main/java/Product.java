@@ -1,3 +1,6 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -71,13 +74,20 @@ public class Product implements Serializable {
     }
 
     public void addStock(int quantity){
+
              this.stock = getStock() + quantity;
+
              System.out.println("Updated Stock:   Name : " + this.name + " Stock : " + this.getStock());
+
+
     }
-    public void removeStock(int quantity){
+    public int removeStock(int quantity){
 
             this.stock = this.getStock() - quantity;
-            System.out.println("Updated Stock:   Name : " + this.name  + " Stock : " + this.getStock());
+
+            System.out.println("Updated Product Stock:   Name : " + this.name  + " Stock : " + this.getStock());
+
+            return this.stock;
         }
 
         @Override
