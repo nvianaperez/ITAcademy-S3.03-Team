@@ -10,6 +10,7 @@ public class Menu {
         } else {
             s0.setName(User.readString("Entre el nom de la botiga"));
             Reader.writeStoreObjectToJson(s0);
+            System.out.println("La seva botiga "+s0.getName()+" s'ha creat correctament.\nComenci a introduir productes.");
         }
     }
 

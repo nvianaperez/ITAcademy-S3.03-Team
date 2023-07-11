@@ -55,11 +55,11 @@ public class User {
             try{
                 System.out.println(message);
                 input = sc.nextLine();
-//                if(input.length()<4) throw new InputMismatchException();
+                if(!input.matches("[a-zA-Z]+")) throw new InputMismatchException();
                 if(input.isEmpty()) throw new Exception();
                 checked = true;
-//            } catch (InputMismatchException e) {
-//                System.out.println("Error: el nom almenys ha de tenir 4 lletres");
+            } catch (InputMismatchException e) {
+                System.out.println("Error: el nom només pot contenir lletres");
             } catch (Exception e) {
                 System.out.println("Error: el nom no pot estar buit");
             }
