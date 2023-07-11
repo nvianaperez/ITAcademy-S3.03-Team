@@ -31,13 +31,13 @@ public class Main {
                     Menu.printTotalValue();
                     break;
                 case 7:
-//                    Menu.createTicket();
+                    Menu.createTicket();
                     break;
                 case 8:
-//                    Menu.printAllTickets();
+                    Menu.printAllTickets();
                     break;
                 case 9:
-//                    Menu.printTotalTickets();
+                    Menu.printTotalTickets();
                     break;
                 case 0:
                     System.out.println("Gràcies per la teva visita");
