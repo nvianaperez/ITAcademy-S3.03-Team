@@ -1,3 +1,6 @@
 {"price":5,"name":"bonsai","idProduct":1,"stock":1,"category":"TREE","height":5}
 {"price":5,"name":"roser","idProduct":2,"stock":2,"category":"TREE","height":5}
 {"price":5,"name":"guirnalda","idProduct":3,"decoType":"fusta","stock":4,"category":"DECO"}
+{"price":1,"name":"limonero","idProduct":4,"stock":5,"category":"TREE","height":1}
+{"price":1,"name":"pino","idProduct":5,"stock":5,"category":"TREE","height":1}
+{"price":1,"name":"aveto","idProduct":6,"stock":5,"category":"TREE","height":1}

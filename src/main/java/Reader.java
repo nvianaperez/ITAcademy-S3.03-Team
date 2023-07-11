@@ -11,7 +11,6 @@ public class Reader {
     private static final String ticketPath = "ticketPath.txt";
     private static final String storePath = "storePath.txt";
 
-    //ToDo: Ja tens una botiga creada amb nom: Default --> falta método readJsonStore()
     public static boolean checkStoreExist() {
         boolean found = false;
         File file = new File(storePath);
@@ -35,7 +34,31 @@ public class Reader {
         return found;
     }
 
-    public static boolean checkProductExist(String idS, String name) {
+
+//    public static boolean checkProductExist(String idS, String name) {
+//        boolean found = false;
+//        File file = new File(productPath);
+//
+//        if (file.exists()) {
+//            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+//                String line = br.readLine();
+//                while (line != null) {
+//                    if (line.contains(idS) && line.contains(name)) {
+//                        found = true;
+//                        break;
+//                    }
+//                    line = br.readLine();
+//                }
+//            } catch (FileNotFoundException e) {
+//                throw new RuntimeException(e);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        return found;
+//    }
+
+        public static boolean checkProductExist(String name) {
         boolean found = false;
         File file = new File(productPath);
 
@@ -43,7 +66,7 @@ public class Reader {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while (line != null) {
-                    if (line.contains(idS) && line.contains(name)) {
+                    if (line.contains(name)) {
                         found = true;
                         break;
                     }
@@ -56,7 +79,6 @@ public class Reader {
             }
         }
         return found;
-
     }
 
     public static void writeStoreObjectToJson(Store s0) {
@@ -70,6 +92,27 @@ public class Reader {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public static String readStoreObjectFromJson() {
+        File file = new File(storePath);
+        String name="";
+
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line = br.readLine();
+                while (line != null) {
+                    JSONObject json = new JSONObject(line);
+                    name = json.getString("name");
+                    line = br.readLine();
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return name;
     }
 
     public static void writeJsonProduct(JSONObject newJsonProduct) {
@@ -89,7 +132,7 @@ public class Reader {
         }
     }
 
-    public static Product readProductObjectFromJson(String idS, String name) {
+    public static Product readProductObjectFromJson(String name) {
         File file = new File(productPath);
         Product product = null;
 
@@ -97,7 +140,7 @@ public class Reader {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
                 while (line != null) {
-                    if (line.contains(name) && line.contains(idS)) {
+                    if (line.contains(name)) {
                         JSONObject json = new JSONObject(line);
                         name = json.getString("name");
                         int stock = json.getInt("stock");

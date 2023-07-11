@@ -10,7 +10,6 @@ public class Writer {
     private static final String ticketPath = "ticketPath.txt";
     private static final String storePath = "storePath.txt";
 
-    //ToDo: Ja tens una botiga creada amb nom: null --> falta método readJsonStore()
     public static boolean checkStoreExist() {
         boolean found = false;
         File file = new File(storePath);

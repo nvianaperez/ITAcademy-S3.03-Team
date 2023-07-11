@@ -6,7 +6,7 @@ public class Menu {
     static Store s0 = Store.getInstance();
     public static void createStore() {
         if (Reader.checkStoreExist()) {
-            System.out.println("Ja tens una botiga creada amb nom: " + s0.getName());
+            System.out.println("Ja tens una botiga creada amb nom: " + Reader.readStoreObjectFromJson());
         } else {
             s0.setName(User.readString("Entre el nom de la botiga"));
             Reader.writeStoreObjectToJson(s0);
@@ -18,13 +18,14 @@ public class Menu {
 
             //Menu.printProducts();
 
-            int idProduct = User.readInteger("Id del Producte: ");
+//            int idProduct = User.readInteger("Id del Producte: ");
             String name = User.readString("Nom del producte: ");
 
-            String idS = String.valueOf(idProduct);
+//            String idS = String.valueOf(idProduct);
 
-            if (Reader.checkProductExist(idS,name)) {
-                Product product = Reader.readProductObjectFromJson(idS,name);
+//            if (Reader.checkProductExist(idS,name)) {
+            if (Reader.checkProductExist(name)) {
+                Product product = Reader.readProductObjectFromJson(name);
                 int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
                 product.addStock(quantity);
                 System.out.println(product);
