@@ -4,7 +4,6 @@
 //import java.io.*;
 //import java.util.ArrayList;
 //
-////ToDo: no funciona el JsonPropertyOrder
 //@JsonPropertyOrder({"category", "name", "price", "stock"})
 //public class Writer {
 //    private static final String productPath = "productPath.txt";
