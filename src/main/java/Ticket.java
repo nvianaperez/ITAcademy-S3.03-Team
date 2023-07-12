@@ -31,23 +31,14 @@ public class Ticket implements Serializable {
         return id;
     }
 
-    public void addProductsToTicket(Product products,int quantity) {
+    public void setId(int id){this.id = id;}
 
-            Optional<Product> productOptional = s0.getProducts().stream()
-                    .filter(p -> products.getName().equalsIgnoreCase(p.getName()))
-                    .findFirst();
-
-            productOptional.ifPresent(product -> {
-                if (quantity <= product.getStock()) {
-                    productsSold.add(new Product(products.getName(),quantity, products.getPrice(), products.getCategory()));
-                    product.removeStock(quantity);
-                } else {
-                    System.out.println("There's not enough stock for this product.");
-                }
-            });
-
-            if (!productOptional.isPresent()) {
-                System.out.println("Product not found.");
+    public void addProductsToTicket(Product product, int quantity) {
+            if (quantity <= product.getStock()) {
+                productsSold.add(new Product(product.getName(), quantity, product.getPrice(), product.getCategory()));
+                product.removeStock(quantity);
+            } else {
+                System.out.println("There's not enough stock for this product.");
             }
     }
 

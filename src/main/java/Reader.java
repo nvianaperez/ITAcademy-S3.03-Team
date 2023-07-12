@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -32,29 +33,6 @@ public class Reader {
 
         return found;
     }
-
-//    public static boolean checkProductExist(String idS, String name) {
-//        boolean found = false;
-//        File file = new File(productPath);
-//
-//        if (file.exists()) {
-//            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-//                String line = br.readLine();
-//                while (line != null) {
-//                    if (line.contains(idS) && line.contains(name)) {
-//                        found = true;
-//                        break;
-//                    }
-//                    line = br.readLine();
-//                }
-//            } catch (FileNotFoundException e) {
-//                throw new RuntimeException(e);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//        return found;
-//    }
 
     public static boolean checkProductExist(String name) {
         boolean found = false;
@@ -146,12 +124,7 @@ public class Reader {
                 throw new RuntimeException(e);
             }
         }
-    }
-    public static Ticket readProductFromTicket() {
-        File file = new File(productPath);
-        Ticket ticket = new Ticket();
-        Product product;
-
+  
         if (file.exists()) {
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line = br.readLine();
@@ -174,6 +147,7 @@ public class Reader {
         return ticket;
     }
     public static Product readProductObjectFromJson(String name) {
+
         File file = new File(productPath);
         Product product = null;
 
@@ -215,7 +189,42 @@ public class Reader {
         }
         return product;
     }
+    public static ArrayList readAllTicketsFromTxt() {
 
+        ArrayList<Ticket> llistaTicketTxt = new ArrayList<>();
+
+        File file = new File(ticketPath);
+        Ticket ticket;
+        Product product;
+
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line = br.readLine();
+
+                while (line != null) {
+
+                    JSONObject json = new JSONObject(line);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String name = json.getString("Product");
+                    int stock = json.getInt("Quantity");
+                    float price = json.getFloat("Price");
+                    int id = json.getInt("Id");
+                    product = new Product(name, stock, price);
+                    ticket = new Ticket();
+                    ticket.setId(id);
+                    ticket.addProductsToTicket(product, stock);
+                    llistaTicketTxt.add(ticket);
+                    line = br.readLine();
+                }
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return llistaTicketTxt;
+    }
     public static void readAllProductsFromTxt() {
 
         ArrayList<Product> llistaProductesTxt = new ArrayList<>();
