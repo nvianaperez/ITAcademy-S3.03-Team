@@ -249,6 +249,7 @@ public class Menu {
             if (s0.getProducts() != null) {
                 boolean keepAddingItems = true;
                 while (keepAddingItems) {
+                    Reader.readAllStockFromTxt();
                     String productName = User.readString("What product do you want to add: ");
                     Product product = Reader.readProductObjectFromJson(productName);
                     if (product != null) {
@@ -257,9 +258,9 @@ public class Menu {
                     } else {
                         System.out.println("There's no product in the store with this name");
                     }
-                    String option = User.readString("Do you want to keep adding items to the ticket? (Yes / No): ");
+                    String option = User.readString("Do you want to keep adding items to the ticket? (S / N): ");
                     System.out.println(ticket.ticketToString());
-                    if (option.equalsIgnoreCase("No")) {
+                    if (!option.equalsIgnoreCase("S")) {
                         keepAddingItems = false;
                     }
                     JSONObject newJsonTicket = Menu.createJsonTicket(ticket);
@@ -270,8 +271,12 @@ public class Menu {
                         newJsonTicket.put("Price", product1.getPrice());
                         newJsonTicket.put("Id", ticket.getId());
                     });
+                    if(newJsonTicket.isEmpty()){
 
-                    Reader.writeJsonTicket(newJsonTicket);
+                    }else{
+                        Reader.writeJsonTicket(newJsonTicket);
+
+                    }
                 }
 
             } else {
@@ -300,11 +305,8 @@ public class Menu {
         if (Reader.checkStoreExist()) {
             if(Reader.readAllTicketsFromTxt().size() != 0){
                 Reader.readAllTicketsFromTxt().forEach(ticket ->s0.addTicketToTickets((Ticket) ticket));
-                double total = s0.getTickets().stream()
-                        .mapToDouble(ticket -> ticket.calculateTotalTicket())
-                        .sum();
-                System.out.println("Total sales: " + total);
-
+                System.out.println("Total sales: ");
+                s0.getTickets().forEach(ticket -> System.out.println(ticket.calculateAll()));
             }else{
                 System.out.println("There isn´t tickets at this moment");
             }
