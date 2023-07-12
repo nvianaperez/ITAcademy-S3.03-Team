@@ -247,22 +247,33 @@ public class Menu {
             s0.getTickets().add(ticket);
 
             if (s0.getProducts() != null) {
-                boolean aux = false;
-                while (!aux) {
-                    ticket.addProductsToTicket(Reader.readProductObjectFromJson(User.readString("What product dou you want to add: ")), User.readInteger("What quantity do you want to add: "));
-                    String option = User.readString("Do you want to keep adding items to ticket? Yes / No");
+                boolean keepAddingItems = true;
+                while (keepAddingItems) {
+                    String productName = User.readString("What product do you want to add: ");
+                    Product product = Reader.readProductObjectFromJson(productName);
+                    if (product != null) {
+                        int quantity = User.readInteger("What quantity do you want to add: ");
+                        ticket.addProductsToTicket(product, quantity);
+                    } else {
+                        System.out.println("There's no product in the store with this name");
+                    }
+                    String option = User.readString("Do you want to keep adding items to the ticket? (Yes / No): ");
                     System.out.println(ticket.ticketToString());
                     if (option.equalsIgnoreCase("No")) {
-                        aux = true;
+                        keepAddingItems = false;
                     }
+                    JSONObject newJsonTicket = Menu.createJsonTicket(ticket);
+
+                    ticket.getProducts().forEach(product1 -> {
+                        newJsonTicket.put("Product", product1.getName());
+                        newJsonTicket.put("Quantity", product1.getStock());
+                        newJsonTicket.put("Price", product1.getPrice());
+                        newJsonTicket.put("Id", ticket.getId());
+                    });
+
+                    Reader.writeJsonTicket(newJsonTicket);
                 }
-                JSONObject newJsonTicket = Menu.createJsonTicket(ticket);
-                ticket.getProducts().forEach(product -> {
-                        newJsonTicket.put("Product",product.getName());
-                        newJsonTicket.put("Quantity",product.getStock());
-                        newJsonTicket.put("Price",product.getPrice());
-                        newJsonTicket.put("Id", ticket.getId());});
-                Reader.writeJsonTicket(newJsonTicket);
+
             } else {
                 System.out.println("There are no products in the store");
             }
@@ -270,10 +281,42 @@ public class Menu {
             System.out.println("First create a store");
         }
     }
-    
+    public static void printAllTickets() {
 
+        if (Reader.checkStoreExist()) {
+            if(Reader.readAllTicketsFromTxt().size() != 0){
+            Reader.readAllTicketsFromTxt().forEach(ticket ->s0.addTicketToTickets((Ticket) ticket));
+            s0.getTickets().forEach(ticket -> System.out.println(ticket.ticketToString()));
+            }else{
+                System.out.println("There isn´t tickets at this moment");
+            }
+        } else {
+            System.out.println("First create a store");
+        }
+    }
 
+    public static void printTotalTickets() {
 
+        if (Reader.checkStoreExist()) {
+            if(Reader.readAllTicketsFromTxt().size() != 0){
+                Reader.readAllTicketsFromTxt().forEach(ticket ->s0.addTicketToTickets((Ticket) ticket));
+                double total = s0.getTickets().stream()
+                        .mapToDouble(ticket -> ticket.calculateTotalTicket())
+                        .sum();
+                System.out.println("Total sales: " + total);
+
+            }else{
+                System.out.println("There isn´t tickets at this moment");
+            }
+        } else {
+            System.out.println("First create a store");
+        }
+    }
 }
+
+
+
+
+
 
 

@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -146,32 +147,7 @@ public class Reader {
             }
         }
     }
-    public static Ticket readProductFromTicket() {
-        File file = new File(productPath);
-        Ticket ticket = new Ticket();
-        Product product;
 
-        if (file.exists()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line = br.readLine();
-                while (line != null) {
-
-                        JSONObject json = new JSONObject(line);
-                        int id = readLastId();
-                        String products = json.getString("Product");
-                        int quantity = json.getInt("Quantity");
-                        float price = json.getFloat("Price");
-                        product = new Product(products, quantity, price);
-                        ticket.getProducts().add(product);
-                        break;
-                    }
-                    line = br.readLine();
-                } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return ticket;
-    }
     public static Product readProductObjectFromJson( String name) {
         File file = new File(productPath);
         Product product = null;
@@ -213,7 +189,42 @@ public class Reader {
         }
         return product;
     }
+    public static ArrayList readAllTicketsFromTxt() {
 
+        ArrayList<Ticket> llistaTicketTxt = new ArrayList<>();
+
+        File file = new File(ticketPath);
+        Ticket ticket;
+        Product product;
+
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line = br.readLine();
+
+                while (line != null) {
+
+                    JSONObject json = new JSONObject(line);
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String name = json.getString("Product");
+                    int stock = json.getInt("Quantity");
+                    float price = json.getFloat("Price");
+                    int id = json.getInt("Id");
+                    product = new Product(name, stock, price);
+                    ticket = new Ticket();
+                    ticket.setId(id);
+                    ticket.addProductsToTicket(product, stock);
+                    llistaTicketTxt.add(ticket);
+                    line = br.readLine();
+                }
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return llistaTicketTxt;
+    }
     public static void readAllProductsFromTxt() {
 
         ArrayList<Product> llistaProductesTxt = new ArrayList<>();
