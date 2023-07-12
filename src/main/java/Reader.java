@@ -91,7 +91,6 @@ public class Reader {
         return name;
     }
 
-    //ToDo: imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
     public static void writeJsonProduct(JSONObject newJsonProduct) {
         File file = new File(productPath);
 
@@ -124,28 +123,8 @@ public class Reader {
                 throw new RuntimeException(e);
             }
         }
-  
-        if (file.exists()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line = br.readLine();
-                while (line != null) {
-
-                        JSONObject json = new JSONObject(line);
-                        int id = readLastId();
-                        String products = json.getString("Product");
-                        int quantity = json.getInt("Quantity");
-                        float price = json.getFloat("Price");
-                        product = new Product(products, quantity, price);
-                        ticket.getProducts().add(product);
-                        break;
-                    }
-                    line = br.readLine();
-                } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return ticket;
     }
+  
     public static Product readProductObjectFromJson(String name) {
 
         File file = new File(productPath);
@@ -509,24 +488,8 @@ public class Reader {
         }
         return llistaProductesTxt;
     }
-    public static void writeJsonProductStock(JSONObject jsonObject) {
-        File file = new File(productPath);
 
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        if (file.exists()) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-                bw.write(jsonObject + "\n");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-        public static void updateStockJsonProduct(JSONObject jsonProduct) {
+    public static void updateStockJsonProduct(JSONObject jsonProduct) {
         File file = new File(productPath);
         File tempFile = new File("temp.json");
 
@@ -549,12 +512,12 @@ public class Reader {
             throw new RuntimeException(e);
         }
 
-        // Reemplazar el archivo original con el archivo temporal
+            // Reemplazar el archivo original con el archivo temporal
         if (file.exists()) {
             file.delete();
         }
         tempFile.renameTo(file);
-    }
+        }
 
 }
 
