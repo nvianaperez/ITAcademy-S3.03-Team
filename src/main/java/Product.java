@@ -25,6 +25,14 @@ public class Product implements Serializable {
         this.category = category;
     }
 
+    public Product(int idProduct, String name, int stock, float price, Category category){
+        this.idProduct = idProduct;
+        this.name = name;
+        this.stock = stock;
+        this.price = price;
+        this.category = category;
+    }
+
     public Product(String name,int stock, float price){
        this.name = name;
        this.stock = stock;
@@ -77,7 +85,7 @@ public class Product implements Serializable {
 
              this.stock = getStock() + quantity;
 
-             System.out.println("Updated Stock:   Name : " + this.name + " Stock : " + this.getStock());
+             System.out.println("Updated Stock -->  Name : " + this.name + " Stock : " + this.getStock());
 
 
     }

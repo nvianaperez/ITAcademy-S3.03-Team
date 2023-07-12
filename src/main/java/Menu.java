@@ -18,29 +18,14 @@ public class Menu {
     }
 
     public static void addProduct() {
-
         if (Reader.checkStoreExist()) {
-
-            //Menu.printProducts();
-
-//            int idProduct = User.readInteger("Id del Producte: ");
             String name = User.readString("Nom del producte: ");
-
-//            String idS = String.valueOf(idProduct);
-//            if (Reader.checkProductExist(idS,name)) {
-//            int idProduct = User.readInteger("Id del Producte: ");
-//            String idS = String.valueOf(idProduct);
-
-
             if (Reader.checkProductExist(name)) {
                 Product product = Reader.readProductObjectFromJson(name);
                 int quantity = User.readInteger("Unitats d'estoc a afegir al producte existent: ");
                 product.addStock(quantity);
-                //ToDo: sobrescribir la linea del Txt y cambiar solo el atributo stock
-                JSONObject newJsonProduct = Menu.createJsonProduct(product);
-                Reader.writeJsonProduct(newJsonProduct);
-                System.out.println(product);
-
+                JSONObject newJsonProduct = Menu.updateJsonProduct(product);
+                Reader.updateStockJsonProduct(newJsonProduct);
             } else {
                 System.out.println("El producte '"+name+"' no es troba al catàleg");
                 Reader.readAllProductsFromTxt();
@@ -48,7 +33,6 @@ public class Menu {
                 if (option.equalsIgnoreCase("si")) {
                     Product newProduct = Menu.createProduct(name);
                     JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
-                    //imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
                     Reader.writeJsonProduct(newJsonProduct);
                     System.out.println(newProduct);
                 }
@@ -58,10 +42,28 @@ public class Menu {
         }
     }
 
+    private static JSONObject updateJsonProduct(Product product) { //product tiene id 1 siempre
+        JSONObject jsonProduct = new JSONObject(); //jsonProduct: "{"idProduct":1}"
+        jsonProduct.put("idProduct", product.getIdProduct());
+        jsonProduct.put("name", product.getName());
+        jsonProduct.put("stock", product.getStock());
+        jsonProduct.put("price", product.getPrice());
+        jsonProduct.put("category", product.getCategory());
+        if (product.getCategory() == Product.Category.TREE) {
+            jsonProduct.put("height", ((Tree) product).getHeigh());
+        }
+        if (product.getCategory() == Product.Category.FLOWER) {
+            jsonProduct.put("colour", ((Flower) product).getColour());
+        }
+        if (product.getCategory() == Product.Category.DECO) {
+            jsonProduct.put("decoType", ((Deco) product).getDecoType());
+        }
+        return jsonProduct;
+    }
+
     private static JSONObject createJsonProduct(Product newProduct) {
         JSONObject jsonProduct = new JSONObject();
         int lastId = Reader.readLastId();
-        //ToDo: cuando solo añadimos stock al producto, el idProduct no debería modificarse
         jsonProduct.put("idProduct", lastId + 1);
         jsonProduct.put("name", newProduct.getName());
         jsonProduct.put("stock", newProduct.getStock());
@@ -122,116 +124,35 @@ public class Menu {
        Reader.readAllProductsFromTxt();
     }
 
-    public static void addStock(){
-
-        int j = 0;
-        boolean esc = false;
-        int posProdu = -1;
-
-        ArrayList<Product> llistaProductes = Reader.getLlistaproductesTxt();
-        llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
-        System.out.println("");
-
+    public static void removeProduct() {
         if (Reader.checkStoreExist()) {
-
-            int idProduct = User.readInteger("Id del Producte: ");
             String name = User.readString("Nom del producte: ");
-
-            while (j < llistaProductes.size() && !esc) {
-                Product p0 = llistaProductes.get(j);
-                if ((idProduct == p0.getIdProduct()) && name.equalsIgnoreCase(p0.getName())) {
-                    posProdu = j;
-                    esc = true;
-                }
-                j++;
-            }
-            if (esc) {
-                JSONArray jsonArray = Reader.createJSONArrayFromTxt();
-                JSONObject newJsonObject = jsonArray.getJSONObject(posProdu);
-                System.out.println(llistaProductes.get(posProdu).toString());
-                System.out.println("");
-
-                int quantity = (User.readInteger("Unitats d'estoc a retirar del producte existent:  "));
-
-                if(quantity > newJsonObject.getInt("stock")){
-                    newJsonObject.put("stock", llistaProductes.get(posProdu).removeStock(quantity));
-                    System.out.println("");
-                    llistaProductes.stream().forEach(p -> Reader.writeJsonProduct(newJsonObject));
-                    llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
-                    System.out.println("");
-                }else{
-                    System.out.println("La quantitat supera l´Stock!");
-                    System.out.println("");
-                }
-
+            if (Reader.checkProductExist(name)) {
+                Product product = Reader.readProductObjectFromJson(name);
+                int quantity = User.readInteger("Unitats d'estoc a retirar del producte existent: ");
+                product.removeStock(quantity);
+                JSONObject newJsonProduct = Menu.updateJsonProduct(product);
+                Reader.updateStockJsonProduct(newJsonProduct);
             } else {
-                System.out.println("El producte no es troba al catàleg");
-                System.out.println("");
+                System.out.println("El producte '"+name+"' no es troba al catàleg");
+                Reader.readAllProductsFromTxt();
+                String option = User.readString("Vols afegir un producte nou? [Si / No]");
+                if (option.equalsIgnoreCase("si")) {
+                    Product newProduct = Menu.createProduct(name);
+                    JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
+                    Reader.writeJsonProduct(newJsonProduct);
+                    System.out.println(newProduct);
+                }
             }
         } else {
             System.out.println("Primer crea la botiga");
-            System.out.println("");
-        }
-    }
-    public static void removeProduct() {
-
-        int j = 0;
-        boolean esc = false;
-        int posProdu = -1;
-
-        ArrayList<Product> llistaProductes = Reader.getLlistaproductesTxt();
-        llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
-        System.out.println("");
-
-        if (Reader.checkStoreExist()) {
-
-            int idProduct = User.readInteger("Id del Producte: ");
-            String name = User.readString("Nom del producte: ");
-
-                while (j < llistaProductes.size() && !esc) {
-                    Product p0 = llistaProductes.get(j);
-                    if ((idProduct == p0.getIdProduct()) && name.equalsIgnoreCase(p0.getName())) {
-                        posProdu = j;
-                        esc = true;
-                    }
-                    j++;
-                }
-                if (esc) {
-                    JSONArray jsonArray = Reader.createJSONArrayFromTxt();
-                    JSONObject newJsonObject = jsonArray.getJSONObject(posProdu);
-                    System.out.println(llistaProductes.get(posProdu).toString());
-                    System.out.println("");
-
-                    int quantity = (User.readInteger("Unitats d'estoc a retirar del producte existent:  "));
-
-                    if(quantity < llistaProductes.get(posProdu).getStock()){
-                        newJsonObject.put("stock", llistaProductes.get(posProdu).removeStock(quantity));
-                        System.out.println("");
-
-                        llistaProductes.stream().forEach(p -> Reader.writeJsonProductStock(newJsonObject));
-                        llistaProductes.stream().forEach(p-> System.out.println(p.toString()));
-                        System.out.println("");
-                    }else{
-                        System.out.println("La quantitat supera l´Stock!");
-                        System.out.println("");
-                    }
-
-                } else {
-                    System.out.println("El producte no es troba al catàleg");
-                    System.out.println("");
-                }
-            } else {
-                System.out.println("Primer crea la botiga");
-                System.out.println("");
-            }
-        }
+        }        }
 
     public static void printStock() {
         Reader.readAllStockFromTxt();
     }
 
     public static void printTotalValue() {
-
         Reader.totalPriceValuesFromTxt();
     }
 
@@ -249,6 +170,7 @@ public class Menu {
             if (s0.getProducts() != null) {
                 boolean aux = false;
                 while (!aux) {
+                    //ToDo: añadir if no se encuentra el producto en el Txt de products
                     ticket.addProductsToTicket(Reader.readProductObjectFromJson(User.readString("What product dou you want to add: ")), User.readInteger("What quantity do you want to add: "));
                     String option = User.readString("Do you want to keep adding items to ticket? Yes / No");
                     System.out.println(ticket.ticketToString());

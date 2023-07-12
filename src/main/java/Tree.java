@@ -8,6 +8,12 @@ public class Tree extends Product{
         this.heigh = heigh;
 
     }
+    public Tree(int id, String name,int stock, float price, Category category, float heigh){
+
+        super(id, name, stock, price, category);
+        this.heigh = heigh;
+
+    }
     public float getHeigh() {
         return this.heigh;
     }

@@ -8,6 +8,11 @@ public class Deco extends Product{
         this.decoType = decoType;
     }
 
+    public Deco(int id, String name,int stock, float price, Category category, String decoType){
+        super(id, name, stock, price, category);
+        this.decoType = decoType;
+    }
+
     public String getDecoType() {
         return decoType;
     }

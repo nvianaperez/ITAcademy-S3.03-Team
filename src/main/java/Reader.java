@@ -113,6 +113,7 @@ public class Reader {
         return name;
     }
 
+    //ToDo: imprimir el jsonProduct de manera ordenada --> {"price":5,"name":"bonsai","stock":5,"category":"TREE","height":5}
     public static void writeJsonProduct(JSONObject newJsonProduct) {
         File file = new File(productPath);
 
@@ -172,7 +173,7 @@ public class Reader {
         }
         return ticket;
     }
-    public static Product readProductObjectFromJson( String name) {
+    public static Product readProductObjectFromJson(String name) {
         File file = new File(productPath);
         Product product = null;
 
@@ -183,22 +184,23 @@ public class Reader {
                 while (line != null) {
                     if (line.contains(name)) {
                         JSONObject json = new JSONObject(line);
+                        int id = json.getInt("idProduct");
                         name = json.getString("name");
                         int stock = json.getInt("stock");
                         float price = json.getFloat("price");
                         String category = json.getString("category");
                         if (category.equals("TREE")) {
                             float height = json.getFloat("height");
-                            product = new Tree(name, stock, price, Product.Category.TREE, height);
+                            product = new Tree(id, name, stock, price, Product.Category.TREE, height);
                         }
                         if (category.equals("FLOWER")) {
                             String colour = json.getString("colour");
-                            product = new Flower(name, stock, price, Product.Category.FLOWER, colour);
+                            product = new Flower(id, name, stock, price, Product.Category.FLOWER, colour);
 
                         }
                         if (category.equals("DECO")) {
                             String decoType = json.getString("decoType");
-                            product = new Deco(name, stock, price, Product.Category.DECO, decoType);
+                            product = new Deco(id, name, stock, price, Product.Category.DECO, decoType);
 
                         }
                         break;
@@ -514,6 +516,37 @@ public class Reader {
             }
         }
     }
+
+        public static void updateStockJsonProduct(JSONObject jsonProduct) {
+        File file = new File(productPath);
+        File tempFile = new File("temp.json");
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile))) {
+
+            jsonProduct.put("stock", jsonProduct.getInt("stock"));
+            jsonProduct.put("idProduct", jsonProduct.getInt("idProduct")); //espero que coja el idProduct que tiene el producto, jsonProduct: "{"idProduct":x}"
+            bw.write(jsonProduct + System.lineSeparator());
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                JSONObject jsonObject = new JSONObject(line);
+                if (!(jsonObject.getInt("idProduct") == jsonProduct.getInt("idProduct"))) {
+                    bw.write(line + System.lineSeparator());
+                }
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Reemplazar el archivo original con el archivo temporal
+        if (file.exists()) {
+            file.delete();
+        }
+        tempFile.renameTo(file);
+    }
+
 }
 
 
