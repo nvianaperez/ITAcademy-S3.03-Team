@@ -1,7 +1,5 @@
 
-
 import org.json.JSONObject;
-
 
 public class Menu {
     static Store s0 = Store.getInstance();
@@ -17,6 +15,7 @@ public class Menu {
 
     public static void addProduct() {
         if (Reader.checkStoreExist()) {
+            printStock();
             String name = User.readString("Nom del producte: ");
             if (Reader.checkProductExist(name)) {
                 Product product = Reader.readProductObjectFromJson(name);
@@ -27,8 +26,8 @@ public class Menu {
             } else {
                 System.out.println("El producte '"+name+"' no es troba al catàleg");
                 Reader.readAllProductsFromTxt();
-                String option = User.readString("Vols afegir un producte nou? [Si / No]");
-                if (option.equalsIgnoreCase("si")) {
+                String option = User.readString("Vols afegir un producte nou? [S/N]");
+                if (option.equalsIgnoreCase("s")) {
                     Product newProduct = Menu.createProduct(name);
                     JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
                     Reader.writeJsonProduct(newJsonProduct);
@@ -40,8 +39,8 @@ public class Menu {
         }
     }
 
-    private static JSONObject updateJsonProduct(Product product) { //product tiene id 1 siempre
-        JSONObject jsonProduct = new JSONObject(); //jsonProduct: "{"idProduct":1}"
+    private static JSONObject updateJsonProduct(Product product) {
+        JSONObject jsonProduct = new JSONObject();
         jsonProduct.put("idProduct", product.getIdProduct());
         jsonProduct.put("name", product.getName());
         jsonProduct.put("stock", product.getStock());
@@ -61,8 +60,9 @@ public class Menu {
 
     private static JSONObject createJsonProduct(Product newProduct) {
         JSONObject jsonProduct = new JSONObject();
-        int lastId = Reader.readLastId();
-        jsonProduct.put("idProduct", lastId + 1);
+        int majorId = Reader.getMajorId();
+
+        jsonProduct.put("idProduct", majorId + 1);
         jsonProduct.put("name", newProduct.getName());
         jsonProduct.put("stock", newProduct.getStock());
         jsonProduct.put("price", newProduct.getPrice());
@@ -119,23 +119,28 @@ public class Menu {
         return category;
     }
     public static void printProducts() {
-       Reader.readAllProductsFromTxt();
+        Reader.readAllProductsFromTxt();
+        System.out.println("");
     }
-
     public static void removeProduct() {
         if (Reader.checkStoreExist()) {
+            printStock();
             String name = User.readString("Nom del producte: ");
             if (Reader.checkProductExist(name)) {
                 Product product = Reader.readProductObjectFromJson(name);
                 int quantity = User.readInteger("Unitats d'estoc a retirar del producte existent: ");
-                product.removeStock(quantity);
+                try {
+                    product.removeStock(quantity);
+                }catch(ArithmeticException e){
+                    System.out.println("Stock insuficient");
+                }
                 JSONObject newJsonProduct = Menu.updateJsonProduct(product);
                 Reader.updateStockJsonProduct(newJsonProduct);
             } else {
                 System.out.println("El producte '"+name+"' no es troba al catàleg");
                 Reader.readAllProductsFromTxt();
-                String option = User.readString("Vols afegir un producte nou? [Si / No]");
-                if (option.equalsIgnoreCase("si")) {
+                String option = User.readString("Vols afegir un producte nou? [S/N]");
+                if (option.equalsIgnoreCase("s")) {
                     Product newProduct = Menu.createProduct(name);
                     JSONObject newJsonProduct = Menu.createJsonProduct(newProduct);
                     Reader.writeJsonProduct(newJsonProduct);
@@ -148,10 +153,12 @@ public class Menu {
 
     public static void printStock() {
         Reader.readAllStockFromTxt();
+        System.out.println("");
     }
 
     public static void printTotalValue() {
         Reader.totalPriceValuesFromTxt();
+        System.out.println("");
     }
 
     private static JSONObject createJsonTicket(Ticket newTicket) {

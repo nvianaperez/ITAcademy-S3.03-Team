@@ -41,10 +41,6 @@ public class Store implements Serializable {
         this.productList.add(product);
     }
 
-    public void removeProductFromProducts(Product productList) {
-        this.productList.remove(productList);
-    }
-
     public List<Ticket> getTickets() {
         return this.ticketList;
     }
