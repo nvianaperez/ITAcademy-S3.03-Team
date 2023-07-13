@@ -1,0 +1,2 @@
+{"price":45,"name":"manzano","idProduct":2,"stock":72,"category":"TREE","height":2}
+{"price":32,"name":"limonero","idProduct":1,"stock":20,"category":"TREE","height":2}

@@ -422,6 +422,32 @@ public class Reader {
         }
         return jsonList;
     }
+    public static JSONArray createJSONArrayFromTxtTicket() {
+
+        File file = new File(ticketPath);
+        JSONObject jsonObject;
+        JSONArray jsonList = new JSONArray();
+
+        if (file.exists()) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line = br.readLine();
+
+                while (line != null) {
+
+                    jsonObject = new JSONObject(line);
+                    jsonList.put(jsonObject);
+
+                    line = br.readLine();
+                }
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return jsonList;
+    }
 
     public static int readLastId() {
 
@@ -437,6 +463,24 @@ public class Reader {
             System.out.println("Last idProduct is : " + lastId);
         } else {
             lastId = 0;
+        }
+
+        return lastId;
+    }
+    public static int readLastIdTicket() {
+
+
+        JSONArray jsonList = createJSONArrayFromTxtTicket();
+
+        int lastId;
+        int i;
+
+        if (jsonList.length() != 0) {
+            i = jsonList.length() - 1;
+            JSONObject lastJsonObject = jsonList.getJSONObject(i);
+            lastId = lastJsonObject.getInt("Id")+1;
+        } else {
+            lastId = 1;
         }
 
         return lastId;
