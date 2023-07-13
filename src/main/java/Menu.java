@@ -174,6 +174,9 @@ public class Menu {
                     if (product != null) {
                         int quantity = User.readInteger("What quantity do you want to add: ");
                         ticket.addProductsToTicket(product, quantity);
+                        product.removeStock(quantity);
+                        JSONObject newJsonProduct = Menu.updateJsonProduct(product);
+                        Reader.updateStockJsonProduct(newJsonProduct);
                     } else {
                         System.out.println("There's no product in the store with this name");
                     }
@@ -182,12 +185,15 @@ public class Menu {
                     if (!option.equalsIgnoreCase("S")) {
                         keepAddingItems = false;
                     }
+
                     JSONObject newJsonTicket = Menu.createJsonTicket(ticket);
+
+                    int lastId = Reader.readLastIdTicket();
                     ticket.getProducts().forEach(product1 -> {
                         newJsonTicket.put("Product", product1.getName());
                         newJsonTicket.put("Quantity", product1.getStock());
                         newJsonTicket.put("Price", product1.getPrice());
-                        newJsonTicket.put("Id", ticket.getId());
+                        newJsonTicket.put("Id", lastId);
                     });
                     if(newJsonTicket.isEmpty()){
 
@@ -211,8 +217,13 @@ public class Menu {
 
         if (Reader.checkStoreExist()) {
             if(Reader.readAllTicketsFromTxt().size() != 0){
+                if(s0.getTickets().size()==0){
                 Reader.readAllTicketsFromTxt().forEach(ticket ->s0.addTicketToTickets((Ticket) ticket));
                 s0.getTickets().forEach(ticket -> System.out.println(ticket.ticketToString()));
+                }
+                else{
+                    s0.getTickets().forEach(ticket -> System.out.println(ticket.ticketToString()));
+                }
             }else{
                 System.out.println("There isn´t tickets at this moment");
             }
@@ -225,9 +236,15 @@ public class Menu {
 
         if (Reader.checkStoreExist()) {
             if(Reader.readAllTicketsFromTxt().size() != 0){
-                Reader.readAllTicketsFromTxt().forEach(ticket ->s0.addTicketToTickets((Ticket) ticket));
-                System.out.println("Total sales: ");
-                s0.getTickets().forEach(ticket -> System.out.println(ticket.calculateAll()));
+                if(s0.getTickets().size()==0) {
+                    Reader.readAllTicketsFromTxt().forEach(ticket -> s0.addTicketToTickets((Ticket) ticket));
+                }
+                float totalSales = 0;
+                for (int i = 0; i < s0.getTickets().size(); i++) {
+                    Ticket ticket = s0.getTickets().get(i);
+                    totalSales += ticket.calculateTotalTicket();
+                }
+                System.out.println("Total sales: "+ totalSales);
             }else{
                 System.out.println("There isn´t tickets at this moment");
             }

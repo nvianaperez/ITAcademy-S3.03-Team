@@ -85,15 +85,12 @@ public class Product implements Serializable {
 
              this.stock = getStock() + quantity;
 
-             System.out.println("Updated Stock -->  Name : " + this.name + " Stock : " + this.getStock());
-
 
     }
     public int removeStock(int quantity){
 
             this.stock = this.getStock() - quantity;
 
-            System.out.println("Updated Product Stock:   Name : " + this.name  + " Stock : " + this.getStock());
 
             return this.stock;
         }
@@ -101,8 +98,8 @@ public class Product implements Serializable {
         @Override
         public String toString(){
 
-        return "Nombre del producto: " + this.name +
-                " Precio del producto" + this.price + "€";
+        return "Nom del producte: " + this.name +
+                " Preu del producte: " + this.price + "€";
         }
 
 
