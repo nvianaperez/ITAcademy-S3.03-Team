@@ -1,11 +1,6 @@
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.Scanner;
-
 public class Product implements Serializable {
-
     private int idProduct;
     private static int idNext = 1;
     private String name;
@@ -17,7 +12,7 @@ public class Product implements Serializable {
         TREE, FLOWER, DECO
     }
 
-    public Product(String name, int stock, float price, Category category){
+    public Product(String name, int stock, float price, Category category) {
         this.idProduct = idNext++;
         this.name = name;
         this.stock = stock;
@@ -25,7 +20,7 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    public Product(int idProduct, String name, int stock, float price, Category category){
+    public Product(int idProduct, String name, int stock, float price, Category category) {
         this.idProduct = idProduct;
         this.name = name;
         this.stock = stock;
@@ -33,12 +28,12 @@ public class Product implements Serializable {
         this.category = category;
     }
 
-    public Product(String name,int stock, float price){
-       this.name = name;
-       this.stock = stock;
-       this.price = price;
+    public Product(String name, int stock, float price) {
+        this.name = name;
+        this.stock = stock;
+        this.price = price;
 
-   }
+    }
 
     public Product(String name) {
         this.name = name;
@@ -48,28 +43,15 @@ public class Product implements Serializable {
         return this.idProduct;
     }
 
-    public void setId(int id) {
-
-        this.idProduct = idProduct;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public float getPrice() {
         return this.price;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public int getStock(){
+    public int getStock() {
         return this.stock;
     }
 
@@ -77,31 +59,31 @@ public class Product implements Serializable {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+    public void addStock(int quantity) {
 
-    public void addStock(int quantity){
+        this.stock = getStock() + quantity;
 
-             this.stock = getStock() + quantity;
-
+        System.out.println("Updated Stock -->  Name : " + this.name + " Stock : " + this.getStock());
 
     }
-    public int removeStock(int quantity){
 
+    public int removeStock(int quantity) throws ArithmeticException {
+
+        if (quantity <= this.stock) {
             this.stock = this.getStock() - quantity;
-
-
-            return this.stock;
+        } else {
+            throw new ArithmeticException("Stock insuficient per la quantitat demandada: ");
         }
 
-        @Override
-        public String toString(){
+        System.out.println("Updated Product Stock:   Name : " + this.name + " Stock : " + this.getStock());
 
-        return "Nom del producte: " + this.name +
-                " Preu del producte: " + this.price + "€";
-        }
+        return this.stock;
+    }
 
+    @Override
+    public String toString() {
 
-
+        return "Nombre del producto: " + this.name +
+                " Precio del producto" + this.price + "€";
+    }
 }

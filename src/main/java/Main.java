@@ -59,8 +59,8 @@ public class Main {
                     5. Veure stock de la floristeria
                     6. Veure el valor total de la floristeria
                     7. Crear un ticket de compra
-                    8. Vuere el històric de compres
-                    9. Vuere el total de vendes
+                    8. Veure l´ històric de compres
+                    9. Veure el total de vendes
                     0. Sortir de l'aplicació
                     """);
 
