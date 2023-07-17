@@ -1,8 +1,9 @@
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 
 //ToDo: no funciona el JsonPropertyOrder
 @JsonPropertyOrder({"id", "name", "price","category", "stock"})
@@ -183,7 +184,7 @@ public class Reader {
                 while (line != null) {
 
                     JSONObject json = new JSONObject(line);
-                    ObjectMapper objectMapper = new ObjectMapper();
+
                     String name = json.getString("Product");
                     int stock = json.getInt("Quantity");
                     float price = json.getFloat("Price");
@@ -220,23 +221,24 @@ public class Reader {
 
                     JSONObject json = new JSONObject(line);
 
+                    int idProduct = json.getInt("idProduct");
                     String name = json.getString("name");
                     int stock = json.getInt("stock");
                     float price = json.getFloat("price");
                     String category = json.getString("category");
                     if (category.equals("TREE")) {
                         float height = json.getFloat("height");
-                        product = new Tree(name, stock, price, Product.Category.TREE, height);
+                        product = new Tree(idProduct,name, stock, price, Product.Category.TREE, height);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("FLOWER")) {
                         String colour = json.getString("colour");
-                        product = new Flower(name, stock, price, Product.Category.FLOWER, colour);
+                        product = new Flower(idProduct,name, stock, price, Product.Category.FLOWER, colour);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("DECO")) {
                         String decoType = json.getString("decoType");
-                        product = new Deco(name, stock, price, Product.Category.DECO, decoType);
+                        product = new Deco(idProduct,name, stock, price, Product.Category.DECO, decoType);
                         llistaProductesTxt.add(product);
                     }
 
@@ -252,7 +254,9 @@ public class Reader {
         if (Reader.checkStoreExist()) {
             if (llistaProductesTxt.size() != 0) {
                 for (int i = 0; i < llistaProductesTxt.size(); i++) {
-                    System.out.println(" Name: "
+                    System.out.println("Id: " +
+                            + llistaProductesTxt.get(i).getIdProduct() +
+                            " Name: "
                             + llistaProductesTxt.get(i).getName() +
                             " Price: "
                             + llistaProductesTxt.get(i).getPrice() +
@@ -285,29 +289,29 @@ public class Reader {
 
                     JSONObject json = new JSONObject(line);
 
+                    int idProduct = json.getInt("idProduct");
                     String name = json.getString("name");
                     int stock = json.getInt("stock");
                     float price = json.getFloat("price");
                     String category = json.getString("category");
                     if (category.equals("TREE")) {
                         float height = json.getFloat("height");
-                        product = new Tree(name, stock, price, Product.Category.TREE, height);
+                        product = new Tree(idProduct,name, stock, price, Product.Category.TREE, height);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("FLOWER")) {
                         String colour = json.getString("colour");
-                        product = new Flower(name, stock, price, Product.Category.FLOWER, colour);
+                        product = new Flower(idProduct,name, stock, price, Product.Category.FLOWER, colour);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("DECO")) {
                         String decoType = json.getString("decoType");
-                        product = new Deco(name, stock, price, Product.Category.DECO, decoType);
+                        product = new Deco(idProduct,name, stock, price, Product.Category.DECO, decoType);
                         llistaProductesTxt.add(product);
                     }
 
                     line = br.readLine();
                 }
-
 
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -317,7 +321,9 @@ public class Reader {
             if (Reader.checkStoreExist()) {
                 if (llistaProductesTxt.size() != 0) {
                     for (int i = 0; i < llistaProductesTxt.size(); i++) {
-                        System.out.println(" Name: "
+                        System.out.println("Id : " +
+                                llistaProductesTxt.get(i).getIdProduct() +
+                                " Name: "
                                 + llistaProductesTxt.get(i).getName() +
                                 " Stock: "
                                 + llistaProductesTxt.get(i).getStock());
@@ -350,26 +356,26 @@ public class Reader {
 
                     JSONObject json = new JSONObject(line);
 
+                    int idProduct = json.getInt("idProduct");
                     String name = json.getString("name");
                     int stock = json.getInt("stock");
                     float price = json.getFloat("price");
                     String category = json.getString("category");
                     if (category.equals("TREE")) {
                         float height = json.getFloat("height");
-                        product = new Tree(name, stock, price, Product.Category.TREE, height);
+                        product = new Tree(idProduct,name, stock, price, Product.Category.TREE, height);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("FLOWER")) {
                         String colour = json.getString("colour");
-                        product = new Flower(name, stock, price, Product.Category.FLOWER, colour);
+                        product = new Flower(idProduct,name, stock, price, Product.Category.FLOWER, colour);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("DECO")) {
                         String decoType = json.getString("decoType");
-                        product = new Deco(name, stock, price, Product.Category.DECO, decoType);
+                        product = new Deco(idProduct,name, stock, price, Product.Category.DECO, decoType);
                         llistaProductesTxt.add(product);
                     }
-
                     line = br.readLine();
                 }
 
@@ -394,33 +400,6 @@ public class Reader {
             System.out.println("Primer crea la botiga");
         }
 
-    }
-
-    public static JSONArray createJSONArrayFromTxt() {
-
-        File file = new File(productPath);
-        JSONObject jsonObject;
-        JSONArray jsonList = new JSONArray();
-
-        if (file.exists()) {
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                String line = br.readLine();
-
-                while (line != null) {
-
-                    jsonObject = new JSONObject(line);
-                    jsonList.put(jsonObject);
-
-                    line = br.readLine();
-                }
-
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return jsonList;
     }
     public static JSONArray createJSONArrayFromTxtTicket() {
 
@@ -448,27 +427,7 @@ public class Reader {
         }
         return jsonList;
     }
-
-    public static int readLastId() {
-
-        JSONArray jsonList = createJSONArrayFromTxt();
-
-        int lastId;
-        int i;
-
-        if (jsonList.length() != 0) {
-            i = jsonList.length() - 1;
-            JSONObject lastJsonObject = jsonList.getJSONObject(i);
-            lastId = lastJsonObject.getInt("idProduct");
-            System.out.println("Last idProduct is : " + lastId);
-        } else {
-            lastId = 0;
-        }
-
-        return lastId;
-    }
     public static int readLastIdTicket() {
-
 
         JSONArray jsonList = createJSONArrayFromTxtTicket();
 
@@ -501,23 +460,24 @@ public class Reader {
 
                     JSONObject json = new JSONObject(line);
 
+                    int idProduct = json.getInt("idProduct");
                     String name = json.getString("name");
                     int stock = json.getInt("stock");
                     float price = json.getFloat("price");
                     String category = json.getString("category");
                     if (category.equals("TREE")) {
                         float height = json.getFloat("height");
-                        product = new Tree(name, stock, price, Product.Category.TREE, height);
+                        product = new Tree(idProduct,name, stock, price, Product.Category.TREE, height);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("FLOWER")) {
                         String colour = json.getString("colour");
-                        product = new Flower(name, stock, price, Product.Category.FLOWER, colour);
+                        product = new Flower(idProduct,name, stock, price, Product.Category.FLOWER, colour);
                         llistaProductesTxt.add(product);
                     }
                     if (category.equals("DECO")) {
                         String decoType = json.getString("decoType");
-                        product = new Deco(name, stock, price, Product.Category.DECO, decoType);
+                        product = new Deco(idProduct,name, stock, price, Product.Category.DECO, decoType);
                         llistaProductesTxt.add(product);
                     }
 
@@ -533,6 +493,25 @@ public class Reader {
         return llistaProductesTxt;
     }
 
+    public static int getMajorId(){
+
+        ArrayList<Product> llistaProductesTxt = Reader.getLlistaproductesTxt();
+        ArrayList<Integer> majorIdList = new ArrayList<>();
+
+        for(int j = 0; j < llistaProductesTxt.size();j++){
+            Product p0 = llistaProductesTxt.get(j);
+            majorIdList.add(p0.getIdProduct());
+        }
+
+        Optional<Integer> idMayor = majorIdList.stream()
+                .max(Comparator.comparing(v->v));
+
+        int majorId = idMayor.orElse(0);
+
+
+        return majorId;
+    }
+
     public static void updateStockJsonProduct(JSONObject jsonProduct) {
         File file = new File(productPath);
         File tempFile = new File("temp.json");
@@ -541,7 +520,7 @@ public class Reader {
              BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile))) {
 
             jsonProduct.put("stock", jsonProduct.getInt("stock"));
-            jsonProduct.put("idProduct", jsonProduct.getInt("idProduct")); //espero que coja el idProduct que tiene el producto, jsonProduct: "{"idProduct":x}"
+            jsonProduct.put("idProduct", jsonProduct.getInt("idProduct"));
             bw.write(jsonProduct + System.lineSeparator());
 
             String line;
@@ -556,7 +535,6 @@ public class Reader {
             throw new RuntimeException(e);
         }
 
-            // Reemplazar el archivo original con el archivo temporal
         if (file.exists()) {
             file.delete();
         }

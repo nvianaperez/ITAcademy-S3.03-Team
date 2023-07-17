@@ -15,10 +15,6 @@ public class Flower extends Product{
         return colour;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
     @Override
     public String toString() {
 
