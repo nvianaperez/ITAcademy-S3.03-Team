@@ -1,4 +1,8 @@
-public class Tree extends Product{
+package Entities;
+
+import Entities.Product;
+
+public class Tree extends Product {
 
     private float heigh;
 

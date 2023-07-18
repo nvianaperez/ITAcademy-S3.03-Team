@@ -1,3 +1,5 @@
+package Entities;
+
 public class Deco extends Product{
 
     private String decoType;

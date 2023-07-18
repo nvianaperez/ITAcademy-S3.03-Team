@@ -1,3 +1,5 @@
+package Entities;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.Serializable;
@@ -14,7 +16,7 @@ public class User {
             try {
                 System.out.println(message);
                 input = sc.nextInt();
-                if(input < 0 || input > 9) throw new RuntimeException();
+                checkRangeInteger(input);
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
@@ -27,6 +29,10 @@ public class User {
         return input;
     }
 
+    private static void checkRangeInteger(int input) {
+        if(input < 0 || input > 9) throw new RuntimeException();
+    }
+
     public static int readInteger(String message) {
         Scanner sc = new Scanner(System.in);
         boolean checked = false;
@@ -35,7 +41,7 @@ public class User {
             try {
                 System.out.println(message);
                 input = sc.nextInt();
-                if(input < 0) throw new RuntimeException();
+                checkPositiveInteger(input);
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: introdueix un número enter");
@@ -47,6 +53,10 @@ public class User {
         return input;
     }
 
+    private static void checkPositiveInteger(int input) {
+        if(input < 0) throw new RuntimeException();
+    }
+
     public static String readString(String message) {
         Scanner sc = new Scanner(System.in);
         boolean checked = false;
@@ -55,8 +65,8 @@ public class User {
             try{
                 System.out.println(message);
                 input = sc.nextLine();
-                if(!input.matches("[a-zA-Z]+")) throw new InputMismatchException();
-                if(input.isEmpty()) throw new Exception();
+                checkCharactersInString(input);
+                checkEmptyString(input);
                 checked = true;
             } catch (InputMismatchException e) {
                 System.out.println("Error: el nom només pot contenir lletres");
@@ -65,6 +75,14 @@ public class User {
             }
         }
         return input;
+    }
+
+    private static void checkEmptyString(String input) throws Exception {
+        if(input.isEmpty()) throw new Exception();
+    }
+
+    private static void checkCharactersInString(String input) {
+        if(!input.matches("[a-zA-Z]+")) throw new InputMismatchException();
     }
 
     public static float readFloat(String message) {

@@ -1,4 +1,6 @@
 
+import Entities.*;
+import Persistence.Reader;
 import org.json.JSONObject;
 
 public class Menu {
