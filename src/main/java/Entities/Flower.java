@@ -1,3 +1,5 @@
+package Entities;
+
 public class Flower extends Product{
 
     private String colour;

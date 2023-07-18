@@ -1,3 +1,6 @@
+package Persistence;
+
+import Entities.*;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.json.*;
 import java.io.*;
